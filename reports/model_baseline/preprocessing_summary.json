@@ -1,0 +1,90 @@
+[
+  {
+    "filename": "Friday-16-02-2018_TrafficForML_CICFlowMeter.csv",
+    "input_sha256": "1a4919faa0c49c7af97230b0c2d076eba23ee6dd81103a3801d51ac316355d8b",
+    "output_sha256": "eb078e944311d14891bdd0b5b91c8836f6bcbbb9e38165c6f6da27e0a11305e0",
+    "output_size_bytes": 89699127,
+    "output_parquet": "/Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/data/processed/CSE-CIC-IDS2018/Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet",
+    "rows_read": 1048575,
+    "rows_retained": 1048574,
+    "header_artifacts_rejected": 1,
+    "infinities_imputed": 0,
+    "nans_imputed": 0,
+    "raw_labels": {
+      "Benign": 446772,
+      "DoS attacks-SlowHTTPTest": 139890,
+      "DoS attacks-Hulk": 461912
+    },
+    "clean_labels": {
+      "Benign": 446772,
+      "DoS attacks-SlowHTTPTest": 139890,
+      "DoS attacks-Hulk": 461912
+    },
+    "elapsed_seconds": 0.5
+  },
+  {
+    "filename": "Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+    "input_sha256": "a5f4a1c2689e0aa6566c03a58466de9c407c0be0cbd3cc69306544026611be04",
+    "output_sha256": "85b04b1111782b8495932e583cd3ff9d6346bc8a69bcdd6b0da9c84732e3fbba",
+    "output_size_bytes": 61788914,
+    "output_parquet": "/Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/data/processed/CSE-CIC-IDS2018/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet",
+    "rows_read": 1048575,
+    "rows_retained": 1048575,
+    "header_artifacts_rejected": 0,
+    "infinities_imputed": 0,
+    "nans_imputed": 0,
+    "raw_labels": {
+      "Benign": 360833,
+      "DDOS attack-LOIC-UDP": 1730,
+      "DDOS attack-HOIC": 686012
+    },
+    "clean_labels": {
+      "Benign": 360833,
+      "DDOS attack-LOIC-UDP": 1730,
+      "DDOS attack-HOIC": 686012
+    },
+    "elapsed_seconds": 0.5
+  },
+  {
+    "filename": "Wednesday-28-02-2018_TrafficForML_CICFlowMeter.csv",
+    "input_sha256": "f15e2a12304446058a0186c8ad67de2bd15735a9ba5c70c9a1f4c4242ab06771",
+    "output_sha256": "eded08ade28e934587c538cf3bec818587f886d55a6ea408b4d429ca54d1784c",
+    "output_size_bytes": 64479944,
+    "output_parquet": "/Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/data/processed/CSE-CIC-IDS2018/Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet",
+    "rows_read": 613104,
+    "rows_retained": 613071,
+    "header_artifacts_rejected": 33,
+    "infinities_imputed": 8297,
+    "nans_imputed": 12338,
+    "raw_labels": {
+      "Benign": 544200,
+      "Infilteration": 68871
+    },
+    "clean_labels": {
+      "Benign": 544200,
+      "Infiltration": 68871
+    },
+    "elapsed_seconds": 0.5
+  },
+  {
+    "filename": "Thursday-01-03-2018_TrafficForML_CICFlowMeter.csv",
+    "input_sha256": "b0534c5d7d8b41e03df71c6966c995d116a8ed28e61f377c8b14cdf5d28f4edf",
+    "output_sha256": "3c1fffb99870f821493a806cf2193c9d6f061e785bfe3ede82f977cf9bf4b7b2",
+    "output_size_bytes": 31893814,
+    "output_parquet": "/Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/data/processed/CSE-CIC-IDS2018/Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet",
+    "rows_read": 331125,
+    "rows_retained": 331100,
+    "header_artifacts_rejected": 25,
+    "infinities_imputed": 4004,
+    "nans_imputed": 5838,
+    "raw_labels": {
+      "Benign": 238037,
+      "Infilteration": 93063
+    },
+    "clean_labels": {
+      "Benign": 238037,
+      "Infiltration": 93063
+    },
+    "elapsed_seconds": 0.5
+  }
+]

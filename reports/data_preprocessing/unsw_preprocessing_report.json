@@ -1,0 +1,543 @@
+{
+  "pipeline": "UNSW-NB15",
+  "timestamp": "2026-10-22T14:03:11.949260+00:00",
+  "file_reports": [
+    {
+      "source_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/UNSW-NB15/UNSW_NB15_training-set.csv",
+      "source_basename": "UNSW_NB15_training-set.csv",
+      "source_size_bytes": 14415539,
+      "split_name": "train",
+      "started_at": "2026-10-22T14:03:11.291866+00:00",
+      "schema": {
+        "actual_columns": [
+          "id",
+          "dur",
+          "xProt",
+          "xServ",
+          "xState",
+          "spkts",
+          "dpkts",
+          "sbytes",
+          "dbytes",
+          "rate",
+          "sttl",
+          "dttl",
+          "sload",
+          "dload",
+          "sloss",
+          "dloss",
+          "sinpkt",
+          "dinpkt",
+          "sjit",
+          "djit",
+          "swin",
+          "stcpb",
+          "dtcpb",
+          "dwin",
+          "tcprtt",
+          "synack",
+          "ackdat",
+          "smean",
+          "dmean",
+          "trans_depth",
+          "response_body_len",
+          "ct_srv_src",
+          "ct_state_ttl",
+          "ct_dst_ltm",
+          "ct_src_dport_ltm",
+          "ct_dst_sport_ltm",
+          "ct_dst_src_ltm",
+          "is_ftp_login",
+          "ct_ftp_cmd",
+          "ct_flw_http_mthd",
+          "ct_src_ltm",
+          "ct_srv_dst",
+          "is_sm_ips_ports",
+          "label"
+        ],
+        "num_columns": 44,
+        "missing_expected": [],
+        "extra_actual": [],
+        "match": true,
+        "has_attack_cat": false
+      },
+      "rows_read": 82332,
+      "rows_retained": 82332,
+      "missing_values_per_column": {},
+      "inf_values_replaced": 0,
+      "binary_label_dist": {
+        "1": 45332,
+        "0": 37000
+      },
+      "attack_cat_dist": {},
+      "data_types": {
+        "id": "int64",
+        "dur": "float64",
+        "xProt": "int64",
+        "xServ": "int64",
+        "xState": "int64",
+        "spkts": "int64",
+        "dpkts": "int64",
+        "sbytes": "int64",
+        "dbytes": "int64",
+        "rate": "float64",
+        "sttl": "int64",
+        "dttl": "int64",
+        "sload": "float64",
+        "dload": "float64",
+        "sloss": "int64",
+        "dloss": "int64",
+        "sinpkt": "float64",
+        "dinpkt": "float64",
+        "sjit": "float64",
+        "djit": "float64",
+        "swin": "int64",
+        "stcpb": "int64",
+        "dtcpb": "int64",
+        "dwin": "int64",
+        "tcprtt": "float64",
+        "synack": "float64",
+        "ackdat": "float64",
+        "smean": "int64",
+        "dmean": "int64",
+        "trans_depth": "int64",
+        "response_body_len": "int64",
+        "ct_srv_src": "int64",
+        "ct_state_ttl": "int64",
+        "ct_dst_ltm": "int64",
+        "ct_src_dport_ltm": "int64",
+        "ct_dst_sport_ltm": "int64",
+        "ct_dst_src_ltm": "int64",
+        "is_ftp_login": "int64",
+        "ct_ftp_cmd": "int64",
+        "ct_flw_http_mthd": "int64",
+        "ct_src_ltm": "int64",
+        "ct_srv_dst": "int64",
+        "is_sm_ips_ports": "int64",
+        "label": "int64"
+      },
+      "output_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/processed/UNSW-NB15/UNSW_NB15_training-set.parquet",
+      "output_rows": 82332,
+      "output_size_bytes": 6729447,
+      "finished_at": "2026-10-22T14:03:11.487653+00:00"
+    },
+    {
+      "source_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/UNSW-NB15/UNSW_NB15_testing-set.csv",
+      "source_basename": "UNSW_NB15_testing-set.csv",
+      "source_size_bytes": 30090070,
+      "split_name": "test",
+      "started_at": "2026-10-22T14:03:11.487920+00:00",
+      "schema": {
+        "actual_columns": [
+          "id",
+          "dur",
+          "xProt",
+          "xServ",
+          "xState",
+          "spkts",
+          "dpkts",
+          "sbytes",
+          "dbytes",
+          "rate",
+          "sttl",
+          "dttl",
+          "sload",
+          "dload",
+          "sloss",
+          "dloss",
+          "sinpkt",
+          "dinpkt",
+          "sjit",
+          "djit",
+          "swin",
+          "stcpb",
+          "dtcpb",
+          "dwin",
+          "tcprtt",
+          "synack",
+          "ackdat",
+          "smean",
+          "dmean",
+          "trans_depth",
+          "response_body_len",
+          "ct_srv_src",
+          "ct_state_ttl",
+          "ct_dst_ltm",
+          "ct_src_dport_ltm",
+          "ct_dst_sport_ltm",
+          "ct_dst_src_ltm",
+          "is_ftp_login",
+          "ct_ftp_cmd",
+          "ct_flw_http_mthd",
+          "ct_src_ltm",
+          "ct_srv_dst",
+          "is_sm_ips_ports",
+          "label"
+        ],
+        "num_columns": 44,
+        "missing_expected": [],
+        "extra_actual": [],
+        "match": true,
+        "has_attack_cat": false
+      },
+      "rows_read": 175341,
+      "rows_retained": 175341,
+      "missing_values_per_column": {},
+      "inf_values_replaced": 0,
+      "binary_label_dist": {
+        "1": 119341,
+        "0": 56000
+      },
+      "attack_cat_dist": {},
+      "data_types": {
+        "id": "int64",
+        "dur": "float64",
+        "xProt": "int64",
+        "xServ": "int64",
+        "xState": "int64",
+        "spkts": "int64",
+        "dpkts": "int64",
+        "sbytes": "int64",
+        "dbytes": "int64",
+        "rate": "float64",
+        "sttl": "int64",
+        "dttl": "int64",
+        "sload": "float64",
+        "dload": "float64",
+        "sloss": "int64",
+        "dloss": "int64",
+        "sinpkt": "float64",
+        "dinpkt": "float64",
+        "sjit": "float64",
+        "djit": "float64",
+        "swin": "int64",
+        "stcpb": "int64",
+        "dtcpb": "int64",
+        "dwin": "int64",
+        "tcprtt": "float64",
+        "synack": "float64",
+        "ackdat": "float64",
+        "smean": "int64",
+        "dmean": "int64",
+        "trans_depth": "int64",
+        "response_body_len": "int64",
+        "ct_srv_src": "int64",
+        "ct_state_ttl": "int64",
+        "ct_dst_ltm": "int64",
+        "ct_src_dport_ltm": "int64",
+        "ct_dst_sport_ltm": "int64",
+        "ct_dst_src_ltm": "int64",
+        "is_ftp_login": "int64",
+        "ct_ftp_cmd": "int64",
+        "ct_flw_http_mthd": "int64",
+        "ct_src_ltm": "int64",
+        "ct_srv_dst": "int64",
+        "is_sm_ips_ports": "int64",
+        "label": "int64"
+      },
+      "output_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/processed/UNSW-NB15/UNSW_NB15_testing-set.parquet",
+      "output_rows": 175341,
+      "output_size_bytes": 13263739,
+      "finished_at": "2026-10-22T14:03:11.946215+00:00"
+    }
+  ],
+  "feature_dictionary": {
+    "features": [
+      {
+        "number": 1,
+        "name": "srcip",
+        "type": "nominal",
+        "description": "Source IP address"
+      },
+      {
+        "number": 2,
+        "name": "sport",
+        "type": "integer",
+        "description": "Source port number"
+      },
+      {
+        "number": 3,
+        "name": "dstip",
+        "type": "nominal",
+        "description": "Destination IP address"
+      },
+      {
+        "number": 4,
+        "name": "dsport",
+        "type": "integer",
+        "description": "Destination port number"
+      },
+      {
+        "number": 5,
+        "name": "proto",
+        "type": "nominal",
+        "description": "Transaction protocol"
+      },
+      {
+        "number": 6,
+        "name": "state",
+        "type": "nominal",
+        "description": "Indicates to the state and its dependent protocol, e.g. ACC, CLO, CON, ECO, ECR, FIN, INT, MAS, PAR, REQ, RST, TST, TXD, URH, URN, and (-) (if not used state)"
+      },
+      {
+        "number": 7,
+        "name": "dur",
+        "type": "Float",
+        "description": "Record total duration"
+      },
+      {
+        "number": 8,
+        "name": "sbytes",
+        "type": "Integer",
+        "description": "Source to destination transaction bytes"
+      },
+      {
+        "number": 9,
+        "name": "dbytes",
+        "type": "Integer",
+        "description": "Destination to source transaction bytes"
+      },
+      {
+        "number": 10,
+        "name": "sttl",
+        "type": "Integer",
+        "description": "Source to destination time to live value"
+      },
+      {
+        "number": 11,
+        "name": "dttl",
+        "type": "Integer",
+        "description": "Destination to source time to live value"
+      },
+      {
+        "number": 12,
+        "name": "sloss",
+        "type": "Integer",
+        "description": "Source packets retransmitted or dropped"
+      },
+      {
+        "number": 13,
+        "name": "dloss",
+        "type": "Integer",
+        "description": "Destination packets retransmitted or dropped"
+      },
+      {
+        "number": 14,
+        "name": "service",
+        "type": "nominal",
+        "description": "http, ftp, smtp, ssh, dns, ftp-data ,irc  and (-) if not much used service"
+      },
+      {
+        "number": 15,
+        "name": "Sload",
+        "type": "Float",
+        "description": "Source bits per second"
+      },
+      {
+        "number": 16,
+        "name": "Dload",
+        "type": "Float",
+        "description": "Destination bits per second"
+      },
+      {
+        "number": 17,
+        "name": "Spkts",
+        "type": "integer",
+        "description": "Source to destination packet count"
+      },
+      {
+        "number": 18,
+        "name": "Dpkts",
+        "type": "integer",
+        "description": "Destination to source packet count"
+      },
+      {
+        "number": 19,
+        "name": "swin",
+        "type": "integer",
+        "description": "Source TCP window advertisement value"
+      },
+      {
+        "number": 20,
+        "name": "dwin",
+        "type": "integer",
+        "description": "Destination TCP window advertisement value"
+      },
+      {
+        "number": 21,
+        "name": "stcpb",
+        "type": "integer",
+        "description": "Source TCP base sequence number"
+      },
+      {
+        "number": 22,
+        "name": "dtcpb",
+        "type": "integer",
+        "description": "Destination TCP base sequence number"
+      },
+      {
+        "number": 23,
+        "name": "smeansz",
+        "type": "integer",
+        "description": "Mean of the ?ow packet size transmitted by the src"
+      },
+      {
+        "number": 24,
+        "name": "dmeansz",
+        "type": "integer",
+        "description": "Mean of the ?ow packet size transmitted by the dst"
+      },
+      {
+        "number": 25,
+        "name": "trans_depth",
+        "type": "integer",
+        "description": "Represents the pipelined depth into the connection of http request/response transaction"
+      },
+      {
+        "number": 26,
+        "name": "res_bdy_len",
+        "type": "integer",
+        "description": "Actual uncompressed content size of the data transferred from the server\u0092s http service."
+      },
+      {
+        "number": 27,
+        "name": "Sjit",
+        "type": "Float",
+        "description": "Source jitter (mSec)"
+      },
+      {
+        "number": 28,
+        "name": "Djit",
+        "type": "Float",
+        "description": "Destination jitter (mSec)"
+      },
+      {
+        "number": 29,
+        "name": "Stime",
+        "type": "Timestamp",
+        "description": "record start time"
+      },
+      {
+        "number": 30,
+        "name": "Ltime",
+        "type": "Timestamp",
+        "description": "record last time"
+      },
+      {
+        "number": 31,
+        "name": "Sintpkt",
+        "type": "Float",
+        "description": "Source interpacket arrival time (mSec)"
+      },
+      {
+        "number": 32,
+        "name": "Dintpkt",
+        "type": "Float",
+        "description": "Destination interpacket arrival time (mSec)"
+      },
+      {
+        "number": 33,
+        "name": "tcprtt",
+        "type": "Float",
+        "description": "TCP connection setup round-trip time, the sum of \u0092synack\u0092 and \u0092ackdat\u0092."
+      },
+      {
+        "number": 34,
+        "name": "synack",
+        "type": "Float",
+        "description": "TCP connection setup time, the time between the SYN and the SYN_ACK packets."
+      },
+      {
+        "number": 35,
+        "name": "ackdat",
+        "type": "Float",
+        "description": "TCP connection setup time, the time between the SYN_ACK and the ACK packets."
+      },
+      {
+        "number": 36,
+        "name": "is_sm_ips_ports",
+        "type": "Binary",
+        "description": "If source (1) and destination (3)IP addresses equal and port numbers (2)(4)  equal then, this variable takes value 1 else 0"
+      },
+      {
+        "number": 37,
+        "name": "ct_state_ttl",
+        "type": "Integer",
+        "description": "No. for each state (6) according to specific range of values for source/destination time to live (10) (11)."
+      },
+      {
+        "number": 38,
+        "name": "ct_flw_http_mthd",
+        "type": "Integer",
+        "description": "No. of flows that has methods such as Get and Post in http service."
+      },
+      {
+        "number": 39,
+        "name": "is_ftp_login",
+        "type": "Binary",
+        "description": "If the ftp session is accessed by user and password then 1 else 0."
+      },
+      {
+        "number": 40,
+        "name": "ct_ftp_cmd",
+        "type": "integer",
+        "description": "No of flows that has a command in ftp session."
+      },
+      {
+        "number": 41,
+        "name": "ct_srv_src",
+        "type": "integer",
+        "description": "No. of connections that contain the same service (14) and source address (1) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 42,
+        "name": "ct_srv_dst",
+        "type": "integer",
+        "description": "No. of connections that contain the same service (14) and destination address (3) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 43,
+        "name": "ct_dst_ltm",
+        "type": "integer",
+        "description": "No. of connections of the same destination address (3) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 44,
+        "name": "ct_src_ ltm",
+        "type": "integer",
+        "description": "No. of connections of the same source address (1) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 45,
+        "name": "ct_src_dport_ltm",
+        "type": "integer",
+        "description": "No of connections of the same source address (1) and the destination port (4) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 46,
+        "name": "ct_dst_sport_ltm",
+        "type": "integer",
+        "description": "No of connections of the same destination address (3) and the source port (2) in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 47,
+        "name": "ct_dst_src_ltm",
+        "type": "integer",
+        "description": "No of connections of the same source (1) and the destination (3) address in in 100 connections according to the last time (26)."
+      },
+      {
+        "number": 48,
+        "name": "attack_cat",
+        "type": "nominal",
+        "description": "The name of each attack category. In this data set , nine categories e.g. Fuzzers, Analysis, Backdoors, DoS Exploits, Generic, Reconnaissance, Shellcode and Worms"
+      },
+      {
+        "number": 49,
+        "name": "Label",
+        "type": "binary",
+        "description": "0 for normal and 1 for attack records"
+      }
+    ],
+    "count": 49
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "timestamp": "2026-10-22T14:03:26.238140+00:00",
+  "lanl_dns": {
+    "source_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/LANL/dns.txt.gz",
+    "format": "GZIP CSV (headerless)",
+    "schema": [
+      "time",
+      "src_computer",
+      "resolved_computer"
+    ],
+    "schema_notes": "time=integer epoch offset, src_computer=client hostname, resolved_computer=lookup target",
+    "rows_scanned": 100000,
+    "time_range": {
+      "min": 2,
+      "max": 150127
+    },
+    "sample_rows": [
+      [
+        "2",
+        "C4653",
+        "C5030"
+      ],
+      [
+        "2",
+        "C5782",
+        "C16712"
+      ],
+      [
+        "6",
+        "C1191",
+        "C419"
+      ],
+      [
+        "15",
+        "C3380",
+        "C22841"
+      ],
+      [
+        "18",
+        "C2436",
+        "C5030"
+      ]
+    ],
+    "top_src_computers": {
+      "C3380": 5513,
+      "C1823": 3211,
+      "C2492": 3095,
+      "C5948": 1345,
+      "C5778": 1132,
+      "C6346": 763,
+      "C5939": 754,
+      "C768": 658,
+      "C13754": 641,
+      "C1191": 574
+    },
+    "top_resolved_computers": {
+      "C706": 15683,
+      "C1685": 12700,
+      "C1707": 11704,
+      "C5030": 10845,
+      "C22841": 5053,
+      "C457": 4758,
+      "C586": 3490,
+      "C529": 2463,
+      "C467": 2344,
+      "C612": 2328
+    },
+    "unique_src_computers_sampled": 2121,
+    "unique_resolved_computers_sampled": 933
+  },
+  "lanl_redteam": {
+    "source_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/LANL/redteam.txt.gz",
+    "format": "GZIP CSV (headerless)",
+    "schema": [
+      "time",
+      "user_domain",
+      "src_computer",
+      "dst_computer"
+    ],
+    "schema_notes": "Adversary compromise events with ground-truth epoch offsets",
+    "total_events": 749,
+    "sample_rows": [
+      [
+        "150885",
+        "U620@DOM1",
+        "C17693",
+        "C1003"
+      ],
+      [
+        "151036",
+        "U748@DOM1",
+        "C17693",
+        "C305"
+      ],
+      [
+        "151648",
+        "U748@DOM1",
+        "C17693",
+        "C728"
+      ],
+      [
+        "151993",
+        "U6115@DOM1",
+        "C17693",
+        "C1173"
+      ],
+      [
+        "153792",
+        "U636@DOM1",
+        "C17693",
+        "C294"
+      ]
+    ],
+    "time_range": {
+      "min": 150885,
+      "max": 2557047
+    },
+    "output_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/processed/LANL/lanl_redteam_events.parquet",
+    "unique_users": 104,
+    "unique_src_hosts": 4,
+    "unique_dst_hosts": 301
+  },
+  "ctu13_json": {
+    "source_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/CTU-13/botnet-capture-20110810-neris.json",
+    "format": "CapTipper Web Telemetry JSON",
+    "captipper_version": "0.2 b10",
+    "traffic_time": "08/10/11 09:06:36",
+    "total_conversations": 113,
+    "total_uris": 786,
+    "sample_uris": [
+      {
+        "host": "ii.ebatmoyhuy.com",
+        "server_ip": "94.63.149.152:80",
+        "method": "GET",
+        "uri": "/rus.php",
+        "res_type": "application/octet-stream",
+        "md5": "7958e7f604474414668c04a9a0c0cf19",
+        "sha256": "94eac895ebbb0d4932d5b4d905729320e88970231369a7750673a76e6e373605"
+      },
+      {
+        "host": "ii.ebatmoyhuy.com",
+        "server_ip": "94.63.149.152:80",
+        "method": "GET",
+        "uri": "/ff.exe",
+        "res_type": "application/x-msdos-program",
+        "md5": "052151a26e87b21413e26b458b400d81",
+        "sha256": "75be179dc3141dcfa10d034ee80109133b71418e686190c608b22cab72f15a0e"
+      },
+      {
+        "host": "shabi.coolnuff.com:2012",
+        "server_ip": "60.190.223.75:2012",
+        "method": "GET",
+        "uri": "/p/out/kp.exe",
+        "res_type": "application/octet-stream",
+        "md5": "b97c7518b86a4f1a884bb983cbbbd5cc",
+        "sha256": "739bbb203d579a0848fb1ab998361d548ed12af74d18ece5f85d96208b6edb1b"
+      },
+      {
+        "host": "w.nucleardiscover.com:888",
+        "server_ip": "60.190.223.75:888",
+        "method": "GET",
+        "uri": "/list.php?c=B4AC885F94224AE64DAAC6F60346C27CD049B58C0B2469F2DC9ECA825FF9F6D9DFE10E13F3845D3386FFC45E0D4897B5778D4CBB9FE6A5FF432C&v=2&t=0.7304956",
+        "res_type": "text/html",
+        "md5": "3d5db1a21a1b4b09e1b1b67e01263669",
+        "sha256": "bfc1b0f47a18dc5691ad1757c60850108c0ddb5c5338289996fd0a28aa0277b5"
+      },
+      {
+        "host": "w.nucleardiscover.com:888",
+        "server_ip": "60.190.223.75:888",
+        "method": "GET",
+        "uri": "/sn.php?c=ACB245A1AE3E4595C12B7C54ECA526D58B41122488AA75E96F0B2C6525FE1C32430E98736954F6C6036BB12B545FD6CFC60E843CD0BECAEDF0C431978924A1D1A8D493EBFE2DAA358DB72359D836BF60A453195C7B0582719537D5BEDC29E79F18797E6F9288F350AA19E96E2F2FC2588473BC93D097CFE8CD94D3BCF34570CE0F03E24889BDA067E8D25C0C4C89&t=0.7091181",
+        "res_type": "text/html",
+        "md5": "b5f3729e5418905ad2b21ce186b1c01d",
+        "sha256": "9c1623f0d38e28e9594f2ef31a7ec909291c4fdb05a777dccd2e936a7f406011"
+      }
+    ],
+    "methods": {
+      "GET": 754,
+      "POST": 32
+    },
+    "target_hosts": {
+      "1.95622.com": 300,
+      "r1-ads.ace.advertising.com": 79,
+      "riskslot.com": 52,
+      "www.zkaoo.com": 42,
+      "oversee.d.chango.com": 31,
+      "ads.ad4game.com": 31,
+      "googleads.g.doubleclick.net": 24,
+      "ad.yieldmanager.com": 24,
+      "cdn.ad4game.com": 17,
+      "ak1.abmr.net": 11
+    },
+    "output_file": "/Users/priyanshu/Desktop/aiml project team neural breach/data/processed/CTU-13/ctu13_http_telemetry.parquet"
+  },
+  "windows_evtx": {
+    "source_archive": "/Users/priyanshu/Desktop/aiml project team neural breach/data/raw/CSE-CIC-IDS2018/Friday-23-02-2018_logs.zip",
+    "format": "ZIP of Windows EVTX Binary XML Event Logs",
+    "total_files": 432,
+    "total_uncompressed_bytes": 2238455229,
+    "sample_hosts": [
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.111.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.115.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.118.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.125.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.126.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.17.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.26.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.35.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.38.evtx",
+        "uncompressed_size_bytes": 2166784
+      },
+      {
+        "filename": "logs/DESKTOP-AN3U28N-172.31.64.46.evtx",
+        "uncompressed_size_bytes": 2166784
+      }
+    ],
+    "status": "AUDITED_VERIFIED"
+  },
+  "mitre_stix": {
+    "status": "REFERENCE_KNOWLEDGE_ISOLATED",
+    "bundles": {
+      "enterprise-attack.json": {
+        "size_mb": 52.71,
+        "total_stix_objects": 26690,
+        "attack_patterns": 867,
+        "malware": 750,
+        "tools": 95,
+        "intrusion_sets": 193
+      },
+      "mobile-attack.json": {
+        "size_mb": 5.81,
+        "total_stix_objects": 2684,
+        "attack_patterns": 190,
+        "malware": 127,
+        "tools": 2,
+        "intrusion_sets": 22
+      },
+      "ics-attack.json": {
+        "size_mb": 5.02,
+        "total_stix_objects": 2566,
+        "attack_patterns": 127,
+        "malware": 32,
+        "tools": 0,
+        "intrusion_sets": 16
+      }
+    }
+  }
+}
