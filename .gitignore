@@ -1,0 +1,66 @@
+# ==============================================================================
+# Git Ignore Configuration — Team Neural Breach
+# Project: AI/ML-Based Cyber Defense Platform
+# ==============================================================================
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# IDE & Editor Files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Large Data Files & Datasets (Stored in Google Drive: 1UHwqXR3qM-OHZc5nHNgkAVJ_Ewl_9Rha)
+data/raw/
+data/processed/
+*.parquet
+*.csv
+*.pcap
+*.gz
+*.zip
+*.tar
+*.tar.bz2
+*.evtx
+data/download_progress.log
+*.log
+
+# Allow documentation and manifests within data/
+!data/documentation/
+!data/documentation/*
+!data/manifests/
+!data/manifests/*
+# Reference documentation allowed, but heavy STIX 2.1 bundles stored in Google Drive
+data/reference/MITRE-ATT-CK/*.json
+!data/reference/
+!data/reference/README*
+
+# Jupyter Checkpoints
+.ipynb_checkpoints/
