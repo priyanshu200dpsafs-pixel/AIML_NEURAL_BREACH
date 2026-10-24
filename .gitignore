@@ -43,6 +43,7 @@ data/raw/
 data/processed/
 *.parquet
 *.csv
+!reports/**/*.csv
 *.pcap
 *.gz
 *.zip
