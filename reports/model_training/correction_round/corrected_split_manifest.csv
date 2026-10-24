@@ -1,0 +1,81 @@
+capture_day,source_file,class_label,split_partition,rows_count,strategy
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Bot,TRAIN,60000,Stratified Chronological
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Bot,VALIDATION,15000,Stratified Chronological
+Friday-02-03-2018,Friday-02-03-2018_TrafficForML_CICFlowMeter.parquet,Bot,TEST,20000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,TRAIN,60000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,VALIDATION,15000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,TEST,20000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,TRAIN,60000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,VALIDATION,15000,Stratified Chronological
+Friday-16-02-2018,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,TEST,20000,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,TRAIN,253,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,VALIDATION,54,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,TEST,55,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,TRAIN,105,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,VALIDATION,22,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,TEST,24,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,TRAIN,37,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,VALIDATION,7,Stratified Chronological
+Friday-23-02-2018,Friday-23-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,TEST,9,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,DDoS attacks-LOIC-HTTP,TRAIN,60000,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,DDoS attacks-LOIC-HTTP,VALIDATION,15000,Stratified Chronological
+Thuesday-20-02-2018,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.parquet,DDoS attacks-LOIC-HTTP,TEST,20000,Stratified Chronological
+Thursday-01-03-2018,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Thursday-01-03-2018,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Thursday-01-03-2018,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Thursday-01-03-2018,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Infiltration,TEST_HELD_OUT,93063,Held-Out Capture Day (100% Infiltration on Mar 01)
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-GoldenEye,TRAIN,29055,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-GoldenEye,VALIDATION,6226,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-GoldenEye,TEST,6227,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Slowloris,TRAIN,7692,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Slowloris,VALIDATION,1648,Stratified Chronological
+Thursday-15-02-2018,Thursday-15-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Slowloris,TEST,1650,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,TRAIN,174,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,VALIDATION,37,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -Web,TEST,38,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,TRAIN,55,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,VALIDATION,11,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,Brute Force -XSS,TEST,13,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,TRAIN,23,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,VALIDATION,5,Stratified Chronological
+Thursday-22-02-2018,Thursday-22-02-2018_TrafficForML_CICFlowMeter.parquet,SQL Injection,TEST,6,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,FTP-BruteForce,TRAIN,60000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,FTP-BruteForce,VALIDATION,15000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,FTP-BruteForce,TEST,20000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,SSH-Bruteforce,TRAIN,60000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,SSH-Bruteforce,VALIDATION,15000,Stratified Chronological
+Wednesday-14-02-2018,Wednesday-14-02-2018_TrafficForML_CICFlowMeter.parquet,SSH-Bruteforce,TEST,20000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,TRAIN,1211,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,VALIDATION,259,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,TEST,260,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,TRAIN,60000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,VALIDATION,15000,Stratified Chronological
+Wednesday-21-02-2018,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,TEST,20000,Stratified Chronological
+Wednesday-28-02-2018,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,80000,Stratified Chronological
+Wednesday-28-02-2018,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,20000,Stratified Chronological
+Wednesday-28-02-2018,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,30000,Stratified Chronological
+Wednesday-28-02-2018,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Infiltration,TRAIN,68871,Capture-Day Train (100% Infiltration on Feb 28)

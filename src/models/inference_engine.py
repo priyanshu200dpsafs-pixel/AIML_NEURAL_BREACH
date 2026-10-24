@@ -23,7 +23,9 @@ import torch
 import torch.nn as nn
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-MODELS_DIR = os.path.join(PROJECT_ROOT, "models", "role3_real_data")
+CORRECTED_DIR = os.path.join(PROJECT_ROOT, "models", "role3_corrected")
+REAL_DATA_DIR = os.path.join(PROJECT_ROOT, "models", "role3_real_data")
+DEFAULT_MODELS_DIR = CORRECTED_DIR if os.path.exists(CORRECTED_DIR) else REAL_DATA_DIR
 
 
 class DeepAutoencoder(nn.Module):
@@ -65,11 +67,14 @@ class CyberDefenseInferenceEngine:
     Guarantees strict schema contract enforcement, missing value handling,
     and hybrid supervised + anomaly detection alert synthesis.
     """
-    def __init__(self, models_dir: str = MODELS_DIR, use_xgboost: bool = True):
+    def __init__(self, models_dir: str = DEFAULT_MODELS_DIR, use_xgboost: bool = True):
         self.models_dir = models_dir
         
         # Load feature schema contract
-        feat_path = os.path.join(self.models_dir, "feature_columns_baseline.json")
+        feat_path = os.path.join(self.models_dir, "feature_columns.json")
+        if not os.path.exists(feat_path):
+            feat_path = os.path.join(self.models_dir, "feature_columns_baseline.json")
+            
         with open(feat_path, "r") as fp:
             self.expected_features = json.load(fp)
         self.feature_names = self.expected_features
@@ -80,23 +85,41 @@ class CyberDefenseInferenceEngine:
             self.label_mapping = {int(k): v for k, v in json.load(fp).items()}
             
         # Load preprocessors
-        self.scaler = joblib.load(os.path.join(self.models_dir, "scaler_anomaly.joblib"))
+        scaler_path = os.path.join(self.models_dir, "scaler_corrected.joblib")
+        if not os.path.exists(scaler_path):
+            scaler_path = os.path.join(self.models_dir, "scaler_anomaly.joblib")
+        self.scaler = joblib.load(scaler_path)
         
         # Load supervised classifier (XGBoost primary or HistGBT)
-        if use_xgboost and os.path.exists(os.path.join(self.models_dir, "supervised_xgboost_candidate.joblib")):
-            self.classifier = joblib.load(os.path.join(self.models_dir, "supervised_xgboost_candidate.joblib"))
+        xgb_corr = os.path.join(self.models_dir, "supervised_xgboost_corrected.joblib")
+        xgb_base = os.path.join(self.models_dir, "supervised_xgboost_candidate.joblib")
+        hist_corr = os.path.join(self.models_dir, "supervised_histgbt_corrected.joblib")
+        hist_base = os.path.join(self.models_dir, "supervised_histgbt_baseline.joblib")
+        
+        if use_xgboost and os.path.exists(xgb_corr):
+            self.classifier = joblib.load(xgb_corr)
+            self.clf_type = "XGBoost (Corrected)"
+        elif use_xgboost and os.path.exists(xgb_base):
+            self.classifier = joblib.load(xgb_base)
             self.clf_type = "XGBoost"
+        elif os.path.exists(hist_corr):
+            self.classifier = joblib.load(hist_corr)
+            self.clf_type = "HistGradientBoosting (Corrected)"
         else:
-            self.classifier = joblib.load(os.path.join(self.models_dir, "supervised_histgbt_baseline.joblib"))
+            self.classifier = joblib.load(hist_base)
             self.clf_type = "HistGradientBoosting"
             
         # Load Isolation Forest
-        self.iso_forest = joblib.load(os.path.join(self.models_dir, "anomaly_isolation_forest.joblib"))
+        iso_corr = os.path.join(self.models_dir, "anomaly_isolation_forest_corrected.joblib")
+        iso_base = os.path.join(self.models_dir, "anomaly_isolation_forest.joblib")
+        self.iso_forest = joblib.load(iso_corr if os.path.exists(iso_corr) else iso_base)
         self.iso_threshold_1pct = -0.0035  # Calibrated for <= 1.0% FPR
         
         # Load Deep Autoencoder
         self.autoencoder = DeepAutoencoder(input_dim=len(self.expected_features), latent_dim=12)
-        ae_path = os.path.join(self.models_dir, "anomaly_deep_autoencoder.pt")
+        ae_corr = os.path.join(self.models_dir, "anomaly_deep_autoencoder_corrected.pt")
+        ae_base = os.path.join(self.models_dir, "anomaly_deep_autoencoder.pt")
+        ae_path = ae_corr if os.path.exists(ae_corr) else ae_base
         self.autoencoder.load_state_dict(torch.load(ae_path, map_location="cpu"))
         self.autoencoder.eval()
         self.ae_threshold_1pct = 0.3384  # Calibrated for <= 1.0% FPR

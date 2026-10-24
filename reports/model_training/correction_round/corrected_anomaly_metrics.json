@@ -1,0 +1,187 @@
+{
+  "metadata": {
+    "generated_timestamp": "2026-10-24 14:33:42 UTC",
+    "benign_training_flows": 800000,
+    "benign_validation_flows": 200000,
+    "test_flows_evaluated": 541345
+  },
+  "operating_points_comparison": [
+    {
+      "target_fpr_budget": 0.001,
+      "autoencoder": {
+        "threshold_mse": 1.4762957096099854,
+        "validation_fpr": 0.001005,
+        "test_fpr": 0.0009433333333333334,
+        "attack_recall": 0.00604114441981396
+      },
+      "isolation_forest_scaled": {
+        "threshold_score": -0.07968430057096386,
+        "validation_fpr": 0.001,
+        "test_fpr": 0.0010866666666666668,
+        "attack_recall": 0.0005759390084733473
+      },
+      "isolation_forest_unscaled": {
+        "threshold_score": -0.1912016819179544,
+        "validation_fpr": 0.001,
+        "test_fpr": 0.0011266666666666667,
+        "attack_recall": 0.00036876670326710723
+      }
+    },
+    {
+      "target_fpr_budget": 0.005,
+      "autoencoder": {
+        "threshold_mse": 0.6461633443832397,
+        "validation_fpr": 0.005005,
+        "test_fpr": 0.007366666666666666,
+        "attack_recall": 0.010847541900598728
+      },
+      "isolation_forest_scaled": {
+        "threshold_score": -0.01750110569483187,
+        "validation_fpr": 0.005,
+        "test_fpr": 0.005246666666666667,
+        "attack_recall": 0.007226170005593652
+      },
+      "isolation_forest_unscaled": {
+        "threshold_score": -0.16052677220694,
+        "validation_fpr": 0.010645,
+        "test_fpr": 0.0038933333333333333,
+        "attack_recall": 0.0022996125877892642
+      }
+    },
+    {
+      "target_fpr_budget": 0.01,
+      "autoencoder": {
+        "threshold_mse": 0.3383733034133911,
+        "validation_fpr": 0.01,
+        "test_fpr": 0.011406666666666667,
+        "attack_recall": 0.0452422880109387
+      },
+      "isolation_forest_scaled": {
+        "threshold_score": -0.0035109438906176793,
+        "validation_fpr": 0.01019,
+        "test_fpr": 0.00677,
+        "attack_recall": 0.008825540201785826
+      },
+      "isolation_forest_unscaled": {
+        "threshold_score": -0.16052677220694,
+        "validation_fpr": 0.010645,
+        "test_fpr": 0.0038933333333333333,
+        "attack_recall": 0.0022996125877892642
+      }
+    },
+    {
+      "target_fpr_budget": 0.02,
+      "autoencoder": {
+        "threshold_mse": 0.1879756897687912,
+        "validation_fpr": 0.02,
+        "test_fpr": 0.018296666666666666,
+        "attack_recall": 0.0976858853508463
+      },
+      "isolation_forest_scaled": {
+        "threshold_score": 0.03486392748775329,
+        "validation_fpr": 0.02,
+        "test_fpr": 0.013533333333333333,
+        "attack_recall": 0.014008991278045951
+      },
+      "isolation_forest_unscaled": {
+        "threshold_score": -0.12926575890687975,
+        "validation_fpr": 0.02002,
+        "test_fpr": 0.013523333333333333,
+        "attack_recall": 0.008369761130332097
+      }
+    },
+    {
+      "target_fpr_budget": 0.05,
+      "autoencoder": {
+        "threshold_mse": 0.08912148326635361,
+        "validation_fpr": 0.05,
+        "test_fpr": 0.04356,
+        "attack_recall": 0.27275062669622324
+      },
+      "isolation_forest_scaled": {
+        "threshold_score": 0.0953898404884285,
+        "validation_fpr": 0.05,
+        "test_fpr": 0.049256666666666664,
+        "attack_recall": 0.029232012264600468
+      },
+      "isolation_forest_unscaled": {
+        "threshold_score": -0.08521227190869529,
+        "validation_fpr": 0.070245,
+        "test_fpr": 0.06366,
+        "attack_recall": 0.0223373179473368
+      }
+    }
+  ],
+  "deep_autoencoder_per_attack_recall_1pct_fpr": {
+    "Bot": {
+      "support": 20000,
+      "detected": 56,
+      "recall_at_1pct_fpr": 0.0028
+    },
+    "Brute Force -Web": {
+      "support": 93,
+      "detected": 20,
+      "recall_at_1pct_fpr": 0.21505376344086022
+    },
+    "Brute Force -XSS": {
+      "support": 37,
+      "detected": 16,
+      "recall_at_1pct_fpr": 0.43243243243243246
+    },
+    "DDOS attack-HOIC": {
+      "support": 20000,
+      "detected": 0,
+      "recall_at_1pct_fpr": 0.0
+    },
+    "DDOS attack-LOIC-UDP": {
+      "support": 260,
+      "detected": 260,
+      "recall_at_1pct_fpr": 1.0
+    },
+    "DDoS attacks-LOIC-HTTP": {
+      "support": 20000,
+      "detected": 0,
+      "recall_at_1pct_fpr": 0.0
+    },
+    "DoS attacks-GoldenEye": {
+      "support": 6227,
+      "detected": 191,
+      "recall_at_1pct_fpr": 0.03067287618435844
+    },
+    "DoS attacks-Hulk": {
+      "support": 20000,
+      "detected": 455,
+      "recall_at_1pct_fpr": 0.02275
+    },
+    "DoS attacks-SlowHTTPTest": {
+      "support": 20000,
+      "detected": 151,
+      "recall_at_1pct_fpr": 0.00755
+    },
+    "DoS attacks-Slowloris": {
+      "support": 1650,
+      "detected": 1089,
+      "recall_at_1pct_fpr": 0.66
+    },
+    "FTP-BruteForce": {
+      "support": 20000,
+      "detected": 6661,
+      "recall_at_1pct_fpr": 0.33305
+    },
+    "Infiltration": {
+      "support": 93063,
+      "detected": 2015,
+      "recall_at_1pct_fpr": 0.021651999183348914
+    },
+    "SQL Injection": {
+      "support": 15,
+      "detected": 1,
+      "recall_at_1pct_fpr": 0.06666666666666667
+    },
+    "SSH-Bruteforce": {
+      "support": 20000,
+      "detected": 4,
+      "recall_at_1pct_fpr": 0.0002
+    }
+  }
+}
