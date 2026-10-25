@@ -1,0 +1,159 @@
+{
+  "metadata": {
+    "timestamp": "2026-10-25 13:21:04 UTC",
+    "benign_train_samples": 800000,
+    "models": [
+      "PyTorch Deep Autoencoder (77->48->24->12->24->48->77)",
+      "Isolation Forest"
+    ]
+  },
+  "operating_points_comparison": [
+    {
+      "target_fpr_budget": 0.001,
+      "autoencoder": {
+        "threshold_mse": 4.614873886108398,
+        "validation_fpr": 0.001005,
+        "test_fpr": 0.0007733333333333333,
+        "attack_recall": 0.0047442457892228965
+      },
+      "isolation_forest": {
+        "threshold_score": -0.13326530124088404,
+        "validation_fpr": 0.006875,
+        "test_fpr": 0.0006033333333333333,
+        "attack_recall": 0.0067496737036193
+      }
+    },
+    {
+      "target_fpr_budget": 0.005,
+      "autoencoder": {
+        "threshold_mse": 1.3906114101409912,
+        "validation_fpr": 0.005005,
+        "test_fpr": 0.0015766666666666668,
+        "attack_recall": 0.03958234063270422
+      },
+      "isolation_forest": {
+        "threshold_score": -0.13326530124088404,
+        "validation_fpr": 0.006875,
+        "test_fpr": 0.0006033333333333333,
+        "attack_recall": 0.0067496737036193
+      }
+    },
+    {
+      "target_fpr_budget": 0.01,
+      "autoencoder": {
+        "threshold_mse": 1.2912611961364746,
+        "validation_fpr": 0.03165,
+        "test_fpr": 0.00423,
+        "attack_recall": 0.13543267935942324
+      },
+      "isolation_forest": {
+        "threshold_score": -0.08063445157619115,
+        "validation_fpr": 0.010035,
+        "test_fpr": 0.002213333333333333,
+        "attack_recall": 0.008005137873169114
+      }
+    },
+    {
+      "target_fpr_budget": 0.02,
+      "autoencoder": {
+        "threshold_mse": 1.2912611961364746,
+        "validation_fpr": 0.03165,
+        "test_fpr": 0.00423,
+        "attack_recall": 0.13543267935942324
+      },
+      "isolation_forest": {
+        "threshold_score": -0.07741667308676586,
+        "validation_fpr": 0.02004,
+        "test_fpr": 0.009766666666666667,
+        "attack_recall": 0.008253744639416603
+      }
+    },
+    {
+      "target_fpr_budget": 0.05,
+      "autoencoder": {
+        "threshold_mse": 0.24448369443416595,
+        "validation_fpr": 0.05,
+        "test_fpr": 0.02017,
+        "attack_recall": 0.1935859454308148
+      },
+      "isolation_forest": {
+        "threshold_score": -0.017792050133531037,
+        "validation_fpr": 0.05,
+        "test_fpr": 0.04162333333333333,
+        "attack_recall": 0.01225631357600116
+      }
+    }
+  ],
+  "unseen_attack_breakdown_1pct_fpr": {
+    "Bot": {
+      "test_support": 20000,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "Brute Force -Web": {
+      "test_support": 93,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "Brute Force -XSS": {
+      "test_support": 37,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "DDOS attack-HOIC": {
+      "test_support": 20000,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "DDOS attack-LOIC-UDP": {
+      "test_support": 260,
+      "detected_anomalies": 260,
+      "zero_day_recall_at_1pct_fpr": 1.0
+    },
+    "DDoS attacks-LOIC-HTTP": {
+      "test_support": 20000,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "DoS attacks-GoldenEye": {
+      "test_support": 6227,
+      "detected_anomalies": 14,
+      "zero_day_recall_at_1pct_fpr": 0.0022482736470210373
+    },
+    "DoS attacks-Hulk": {
+      "test_support": 20000,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "DoS attacks-SlowHTTPTest": {
+      "test_support": 20000,
+      "detected_anomalies": 8976,
+      "zero_day_recall_at_1pct_fpr": 0.4488
+    },
+    "DoS attacks-Slowloris": {
+      "test_support": 1650,
+      "detected_anomalies": 1088,
+      "zero_day_recall_at_1pct_fpr": 0.6593939393939394
+    },
+    "FTP-BruteForce": {
+      "test_support": 20000,
+      "detected_anomalies": 15644,
+      "zero_day_recall_at_1pct_fpr": 0.7822
+    },
+    "Infiltration": {
+      "test_support": 93063,
+      "detected_anomalies": 6704,
+      "zero_day_recall_at_1pct_fpr": 0.07203722209685912
+    },
+    "SQL Injection": {
+      "test_support": 15,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    },
+    "SSH-Bruteforce": {
+      "test_support": 20000,
+      "detected_anomalies": 0,
+      "zero_day_recall_at_1pct_fpr": 0.0
+    }
+  }
+}

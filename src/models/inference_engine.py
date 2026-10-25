@@ -2,13 +2,13 @@
 """
 Role 6 Production Inference Engine & Strict Security Contract
 Team: Neural Breach | AI/ML Cyber Defense Platform
-Role 3: Machine Learning & Anomaly Detection
+Role 3: Machine Learning & Anomaly Detection (Retraining V2)
 
 Exposes an immutable, defensive inference interface for the Role 6 FastAPI backend:
   1. Validates strict feature presence, exact ordering (77 features), and types.
   2. Imputes missing/infinite values safely without crashing or leaking memory.
   3. Rejects invalid or corrupted schemas with structured exceptions.
-  4. Returns multi-class predictions, probabilities, anomaly scores, and calibrated alerts.
+  4. Returns multi-class predictions, probabilities, calibrated anomaly scores, and SOC alert triage.
 """
 
 import os
@@ -23,9 +23,11 @@ import torch
 import torch.nn as nn
 
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+V2_DIR = os.path.join(PROJECT_ROOT, "models", "role3_retrain_v2")
 CORRECTED_DIR = os.path.join(PROJECT_ROOT, "models", "role3_corrected")
 REAL_DATA_DIR = os.path.join(PROJECT_ROOT, "models", "role3_real_data")
-DEFAULT_MODELS_DIR = CORRECTED_DIR if os.path.exists(CORRECTED_DIR) else REAL_DATA_DIR
+
+DEFAULT_MODELS_DIR = V2_DIR if os.path.exists(V2_DIR) else (CORRECTED_DIR if os.path.exists(CORRECTED_DIR) else REAL_DATA_DIR)
 
 
 class DeepAutoencoder(nn.Module):
@@ -67,62 +69,89 @@ class CyberDefenseInferenceEngine:
     Guarantees strict schema contract enforcement, missing value handling,
     and hybrid supervised + anomaly detection alert synthesis.
     """
-    def __init__(self, models_dir: str = DEFAULT_MODELS_DIR, use_xgboost: bool = True):
+    def __init__(
+        self,
+        models_dir: str = DEFAULT_MODELS_DIR,
+        classifier_type: str = "lightgbm",
+        fpr_budget: str = "1pct"
+    ):
         self.models_dir = models_dir
-        
-        # Load feature schema contract
-        feat_path = os.path.join(self.models_dir, "feature_columns.json")
+        self.requested_clf = classifier_type.lower()
+        self.fpr_budget = fpr_budget
+
+        # Resolve directory hierarchy (handles v2 subdirs or flat historical dirs)
+        sup_dir = os.path.join(self.models_dir, "supervised") if os.path.exists(os.path.join(self.models_dir, "supervised")) else self.models_dir
+        anom_dir = os.path.join(self.models_dir, "anomaly") if os.path.exists(os.path.join(self.models_dir, "anomaly")) else self.models_dir
+
+        # 1. Load feature schema contract
+        feat_path = os.path.join(sup_dir, "feature_columns.json")
         if not os.path.exists(feat_path):
-            feat_path = os.path.join(self.models_dir, "feature_columns_baseline.json")
-            
+            feat_path = os.path.join(sup_dir, "feature_columns_baseline.json")
         with open(feat_path, "r") as fp:
             self.expected_features = json.load(fp)
         self.feature_names = self.expected_features
-            
-        # Load label mapping
-        lbl_path = os.path.join(self.models_dir, "label_mapping.json")
+
+        # 2. Load label mapping
+        lbl_path = os.path.join(sup_dir, "label_mapping.json")
         with open(lbl_path, "r") as fp:
             self.label_mapping = {int(k): v for k, v in json.load(fp).items()}
-            
-        # Load preprocessors
-        scaler_path = os.path.join(self.models_dir, "scaler_corrected.joblib")
+
+        # 3. Load preprocessors
+        scaler_path = os.path.join(anom_dir, "scaler_anomaly.joblib")
         if not os.path.exists(scaler_path):
-            scaler_path = os.path.join(self.models_dir, "scaler_anomaly.joblib")
+            scaler_path = os.path.join(anom_dir, "scaler_corrected.joblib")
         self.scaler = joblib.load(scaler_path)
-        
-        # Load supervised classifier (XGBoost primary or HistGBT)
-        xgb_corr = os.path.join(self.models_dir, "supervised_xgboost_corrected.joblib")
-        xgb_base = os.path.join(self.models_dir, "supervised_xgboost_candidate.joblib")
-        hist_corr = os.path.join(self.models_dir, "supervised_histgbt_corrected.joblib")
-        hist_base = os.path.join(self.models_dir, "supervised_histgbt_baseline.joblib")
-        
-        if use_xgboost and os.path.exists(xgb_corr):
-            self.classifier = joblib.load(xgb_corr)
-            self.clf_type = "XGBoost (Corrected)"
-        elif use_xgboost and os.path.exists(xgb_base):
-            self.classifier = joblib.load(xgb_base)
-            self.clf_type = "XGBoost"
-        elif os.path.exists(hist_corr):
-            self.classifier = joblib.load(hist_corr)
-            self.clf_type = "HistGradientBoosting (Corrected)"
-        else:
-            self.classifier = joblib.load(hist_base)
-            self.clf_type = "HistGradientBoosting"
-            
-        # Load Isolation Forest
-        iso_corr = os.path.join(self.models_dir, "anomaly_isolation_forest_corrected.joblib")
-        iso_base = os.path.join(self.models_dir, "anomaly_isolation_forest.joblib")
-        self.iso_forest = joblib.load(iso_corr if os.path.exists(iso_corr) else iso_base)
-        self.iso_threshold_1pct = -0.0035  # Calibrated for <= 1.0% FPR
-        
-        # Load Deep Autoencoder
+
+        # 4. Load supervised classifier
+        self._load_classifier(sup_dir)
+
+        # 5. Load Isolation Forest
+        iso_path = os.path.join(anom_dir, "anomaly_isolation_forest.joblib")
+        if not os.path.exists(iso_path):
+            iso_path = os.path.join(anom_dir, "anomaly_isolation_forest_corrected.joblib")
+        self.iso_forest = joblib.load(iso_path)
+        self.iso_threshold = -0.08063 if self.fpr_budget == "1pct" else -0.01779
+
+        # 6. Load Deep Autoencoder
         self.autoencoder = DeepAutoencoder(input_dim=len(self.expected_features), latent_dim=12)
-        ae_corr = os.path.join(self.models_dir, "anomaly_deep_autoencoder_corrected.pt")
-        ae_base = os.path.join(self.models_dir, "anomaly_deep_autoencoder.pt")
-        ae_path = ae_corr if os.path.exists(ae_corr) else ae_base
+        ae_path = os.path.join(anom_dir, "anomaly_deep_autoencoder.pt")
+        if not os.path.exists(ae_path):
+            ae_path = os.path.join(anom_dir, "anomaly_deep_autoencoder_corrected.pt")
         self.autoencoder.load_state_dict(torch.load(ae_path, map_location="cpu"))
         self.autoencoder.eval()
-        self.ae_threshold_1pct = 0.3384  # Calibrated for <= 1.0% FPR
+        self.ae_threshold = 1.29126 if self.fpr_budget == "1pct" else 0.24448
+
+    def _load_classifier(self, sup_dir: str):
+        """Loads requested supervised model candidate with safe fallback hierarchy."""
+        lgb_path = os.path.join(sup_dir, "supervised_lightgbm_primary.joblib")
+        xgb_v2 = os.path.join(sup_dir, "supervised_xgboost_benchmark.joblib")
+        xgb_corr = os.path.join(sup_dir, "supervised_xgboost_corrected.joblib")
+        rf_path = os.path.join(sup_dir, "supervised_random_forest.joblib")
+        hist_v2 = os.path.join(sup_dir, "supervised_histgbt_benchmark.joblib")
+        hist_corr = os.path.join(sup_dir, "supervised_histgbt_corrected.joblib")
+
+        if self.requested_clf in ["lightgbm", "lgb"] and os.path.exists(lgb_path):
+            self.classifier = joblib.load(lgb_path)
+            self.clf_type = "LightGBM (Primary Candidate)"
+        elif self.requested_clf in ["xgboost", "xgb"] and (os.path.exists(xgb_v2) or os.path.exists(xgb_corr)):
+            target = xgb_v2 if os.path.exists(xgb_v2) else xgb_corr
+            self.classifier = joblib.load(target)
+            self.clf_type = "XGBoost (High-Precision Candidate)"
+        elif self.requested_clf in ["random_forest", "rf"] and os.path.exists(rf_path):
+            self.classifier = joblib.load(rf_path)
+            self.clf_type = "Random Forest (Baseline)"
+        elif os.path.exists(hist_v2) or os.path.exists(hist_corr):
+            target = hist_v2 if os.path.exists(hist_v2) else hist_corr
+            self.classifier = joblib.load(target)
+            self.clf_type = "HistGradientBoosting"
+        elif os.path.exists(lgb_path):
+            self.classifier = joblib.load(lgb_path)
+            self.clf_type = "LightGBM (Primary Candidate)"
+        elif os.path.exists(xgb_v2):
+            self.classifier = joblib.load(xgb_v2)
+            self.clf_type = "XGBoost"
+        else:
+            raise ModelInferenceError(f"No valid supervised model found in directory: {sup_dir}")
 
     def validate_and_preprocess(self, df: pd.DataFrame) -> Tuple[np.ndarray, np.ndarray]:
         """
@@ -144,7 +173,7 @@ class CyberDefenseInferenceEngine:
         # Handle NaNs and infinities defensibly
         X_clean = X_df.replace([np.inf, -np.inf], np.nan).fillna(0.0).values.astype(np.float32)
 
-        # Apply StandardScaler fitted strictly on training data
+        # Apply StandardScaler fitted strictly on benign training data
         X_scaled = self.scaler.transform(X_clean)
 
         return X_clean, X_scaled
@@ -164,17 +193,16 @@ class CyberDefenseInferenceEngine:
         pred_indices = np.argmax(probs, axis=1)
         confidences = np.max(probs, axis=1)
 
-        # 2. Isolation Forest Outlier Scores
-        # Note: Lower decision_function means more anomalous
+        # 2. Isolation Forest Outlier Scores (lower score = more anomalous)
         iso_scores = self.iso_forest.decision_function(X_scaled)
-        iso_alerts = (iso_scores < self.iso_threshold_1pct)
+        iso_alerts = (iso_scores < self.iso_threshold)
 
         # 3. Deep Autoencoder Reconstruction Error (MSE)
         with torch.no_grad():
             t_scaled = torch.tensor(X_scaled, dtype=torch.float32)
             recon = self.autoencoder(t_scaled)
             ae_errors = ((t_scaled - recon) ** 2).mean(dim=1).numpy()
-        ae_alerts = (ae_errors > self.ae_threshold_1pct)
+        ae_alerts = (ae_errors > self.ae_threshold)
 
         results = []
         for i in range(n_flows):
@@ -215,30 +243,36 @@ ProductionInferenceEngine = CyberDefenseInferenceEngine
 
 def test_inference_engine_contract():
     """Validates that the inference contract functions properly and rejects invalid inputs."""
-    print("[*] Testing CyberDefenseInferenceEngine contract...")
-    engine = CyberDefenseInferenceEngine()
-    print(f"[+] Loaded engine successfully with {engine.clf_type} classifier!")
+    print("[*] Testing CyberDefenseInferenceEngine contract (Role 3 Retraining V2)...")
+    
+    # Test LightGBM primary engine
+    engine_lgb = CyberDefenseInferenceEngine(classifier_type="lightgbm")
+    print(f"[+] Loaded primary engine successfully with {engine_lgb.clf_type} classifier!")
+
+    # Test XGBoost engine
+    engine_xgb = CyberDefenseInferenceEngine(classifier_type="xgboost")
+    print(f"[+] Loaded benchmark engine successfully with {engine_xgb.clf_type} classifier!")
 
     # 1. Valid Dummy Flow Test
-    valid_df = pd.DataFrame(np.zeros((5, len(engine.expected_features))), columns=engine.expected_features)
-    preds = engine.predict_flows(valid_df)
+    valid_df = pd.DataFrame(np.zeros((5, len(engine_lgb.expected_features))), columns=engine_lgb.expected_features)
+    preds = engine_lgb.predict_flows(valid_df)
     assert len(preds) == 5, "Expected 5 predictions"
     assert "predicted_label" in preds[0], "Missing predicted_label"
     assert "threat_level" in preds[0], "Missing threat_level"
     assert "anomaly_detected" in preds[0], "Missing anomaly_detected"
-    print("[✓] Valid inputs handled correctly!")
+    print("[✓] Valid inputs handled correctly for LightGBM!")
 
     # 2. Missing Feature Rejection Test
-    invalid_df = valid_df.drop(columns=[engine.expected_features[0]])
+    invalid_df = valid_df.drop(columns=[engine_lgb.expected_features[0]])
     try:
-        _ = engine.predict_flows(invalid_df)
+        _ = engine_lgb.predict_flows(invalid_df)
         raise AssertionError("Failed to reject missing feature DataFrame!")
     except ModelInferenceError as e:
         print(f"[✓] Correctly rejected missing features: {e}")
 
     # 3. Non-DataFrame Rejection Test
     try:
-        _ = engine.predict_flows("not a dataframe")  # type: ignore
+        _ = engine_lgb.predict_flows("not a dataframe")  # type: ignore
         raise AssertionError("Failed to reject non-DataFrame input!")
     except ModelInferenceError:
         print("[✓] Correctly rejected non-DataFrame input!")
@@ -248,3 +282,4 @@ def test_inference_engine_contract():
 
 if __name__ == "__main__":
     test_inference_engine_contract()
+

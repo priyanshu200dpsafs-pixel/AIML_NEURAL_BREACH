@@ -1,0 +1,71 @@
+{
+  "supervised_lightgbm": {
+    "batch_1": {
+      "per_sample_us": 273.1369972229004,
+      "throughput_fps": 3661.166411608181
+    },
+    "batch_64": {
+      "per_sample_us": 19.52362557252248,
+      "throughput_fps": 51219.99478454445
+    },
+    "batch_256": {
+      "per_sample_us": 27.660133415146877,
+      "throughput_fps": 36153.11556857471
+    },
+    "batch_1024": {
+      "per_sample_us": 20.676571875810623,
+      "throughput_fps": 48363.91670758019
+    },
+    "batch_10000": {
+      "per_sample_us": 14.797427654266357,
+      "throughput_fps": 67579.31333502296
+    }
+  },
+  "supervised_xgboost": {
+    "batch_1": {
+      "per_sample_us": 139.93220329284668,
+      "throughput_fps": 7146.317834410314
+    },
+    "batch_64": {
+      "per_sample_us": 7.819097775679369,
+      "throughput_fps": 127891.9932566151
+    },
+    "batch_256": {
+      "per_sample_us": 4.305896398268248,
+      "throughput_fps": 232239.67961750808
+    },
+    "batch_1024": {
+      "per_sample_us": 2.6445137336850166,
+      "throughput_fps": 378141.35251494526
+    },
+    "batch_10000": {
+      "per_sample_us": 1.4644098281860352,
+      "throughput_fps": 682868.948809706
+    }
+  },
+  "deep_autoencoder": {
+    "batch_1": {
+      "per_sample_us": 36.22260093688965,
+      "throughput_fps": 27607.073322600223
+    },
+    "batch_64": {
+      "per_sample_us": 2.4359100140058074,
+      "throughput_fps": 410524.1959884713
+    },
+    "batch_256": {
+      "per_sample_us": 0.7094717339465493,
+      "throughput_fps": 1409499.4235180323
+    },
+    "batch_1024": {
+      "per_sample_us": 0.40566083043813705,
+      "throughput_fps": 2465113.5257992307
+    },
+    "batch_10000": {
+      "per_sample_us": 0.1556396484375,
+      "throughput_fps": 6425098.039215687
+    }
+  },
+  "preprocessing": {
+    "per_flow_latency_us": 0.29605865478515625
+  }
+}
