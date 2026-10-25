@@ -195,14 +195,14 @@ class CyberDefenseInferenceEngine:
 
         # 2. Isolation Forest Outlier Scores (lower score = more anomalous)
         iso_scores = self.iso_forest.decision_function(X_scaled)
-        iso_alerts = (iso_scores < self.iso_threshold)
+        iso_alerts = (iso_scores <= self.iso_threshold)
 
         # 3. Deep Autoencoder Reconstruction Error (MSE)
         with torch.no_grad():
             t_scaled = torch.tensor(X_scaled, dtype=torch.float32)
             recon = self.autoencoder(t_scaled)
             ae_errors = ((t_scaled - recon) ** 2).mean(dim=1).numpy()
-        ae_alerts = (ae_errors > self.ae_threshold)
+        ae_alerts = (ae_errors >= self.ae_threshold)
 
         results = []
         for i in range(n_flows):
