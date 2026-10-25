@@ -89,12 +89,12 @@ The Neural Breach Detection Engine V2 combines supervised gradient-boosted decis
 | :--- | :---: | :---: | :---: | :---: |
 | **Accuracy** | **75.62%** | **84.57%** | N/A (Anomaly) | **90.06%** |
 | **Macro-F1 Score** | **0.8057** | **0.8168** | N/A | **0.9220** |
-| **Benign FPR** | 35.87% (Raw Argmax) | **1.02%** | **1.14%** | **2.12%** |
-| **Overall Attack Recall** | **94.91%** | **71.67%** | **4.52%** (Zero-Day) | **86.38%** |
-| **Infiltration Recall** | **86.74%** | **26.52%** | **2.17%** | N/A |
+| **Benign FPR** | 35.87% (107,598 FP) | **1.02%** (3,058 FP) | **0.42%** (1,269 FP) | **2.12%** |
+| **Overall Attack Recall** | **94.91%** | **71.67%** | **13.54%** (Zero-Day) | **86.38%** |
+| **Infiltration Recall** | **86.74%** | **26.52%** | **7.20%** | N/A |
 | **High-Volume Flood Recall**| **100.00%** | **>99.9%** | 100% (LOIC-UDP) | N/A |
-| **Inference Latency** | 14.80 µs | **3.52 µs** | **0.41 µs** | 4.10 µs |
-| **Sustained Throughput** | 67,579 flows/s | **290,072 flows/s** | **2,465,114 flows/s** | 243,900 flows/s |
+| **Inference Latency** | 14.84 µs (@b1024) | **1.97 µs** (@b1024) | **0.22 µs** (@b1024) | 4.10 µs |
+| **Sustained Throughput** | 67,379 flows/s | **508,089 flows/s** | **4,597,939 flows/s** | 243,900 flows/s |
 
 ---
 

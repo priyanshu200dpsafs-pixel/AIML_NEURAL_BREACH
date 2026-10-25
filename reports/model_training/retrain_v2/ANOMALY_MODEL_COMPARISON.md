@@ -31,21 +31,29 @@ All alert thresholds were swept and calibrated strictly on the Benign Validation
 
 | Target FPR Budget | Metric | PyTorch Deep Autoencoder | Isolation Forest Baseline | Autoencoder Relative Advantage |
 | :---: | :--- | :---: | :---: | :---: |
-| **FPR $\le$ 0.1%** | Actual Test Benign FPR | **0.09%** | 0.11% | Matches target budget |
-| | Attack Detection Recall | **0.60%** | 0.06% | **10.0x higher recall** |
-| **FPR $\le$ 0.5%** | Actual Test Benign FPR | **0.74%** | 0.52% | Within target budget |
-| | Attack Detection Recall | **1.08%** | 0.72% | **1.5x higher recall** |
-| **FPR $\le$ 1.0%** | Actual Test Benign FPR | **1.14%** | 0.68% | Calibrated at 1.0% |
-| | Attack Detection Recall | **4.52%** | 0.88% | **5.1x higher recall** |
-| **FPR $\le$ 2.0%** | Actual Test Benign FPR | **1.83%** | 1.35% | Calibrated at 2.0% |
-| | Attack Detection Recall | **9.77%** | 1.40% | **7.0x higher recall** |
-| **FPR $\le$ 5.0%** | Actual Test Benign FPR | **4.36%** | 4.93% | Under 5.0% FPR |
-| | Attack Detection Recall | **27.28%** | 2.92% | **9.3x higher recall** |
+| **FPR $\le$ 0.1%** | Calibrated Validation Threshold | MSE $\ge$ 4.6149 | Score $\le$ -0.1333 | Strict tail threshold |
+| | Actual Test Benign FPR | **0.077%** (232 FP) | 0.060% (181 FP) | Within target budget |
+| | Attack Detection Recall | **0.47%** (1,145 attacks) | **0.67%** (1,629 attacks) | Comparable tail detection |
+| **FPR $\le$ 0.5%** | Calibrated Validation Threshold | MSE $\ge$ 1.3906 | Score $\le$ -0.1333* | Plateau threshold |
+| | Actual Test Benign FPR | **0.158%** (473 FP) | 0.060% (181 FP) | Low false-alarm rate |
+| | Attack Detection Recall | **3.96%** (9,553 attacks) | **0.67%** (1,629 attacks) | **5.9x higher recall** |
+| **FPR $\le$ 1.0%** | Calibrated Validation Threshold | MSE $\ge$ 1.2913 | Score $\le$ -0.0806 | Operational baseline |
+| | Actual Test Benign FPR | **0.423%** (1,269 FP) | 0.221% (664 FP) | Well under 1.0% budget |
+| | Attack Detection Recall | **13.54%** (32,686 attacks) | **0.80%** (1,932 attacks) | **16.9x higher recall** |
+| **FPR $\le$ 2.0%** | Calibrated Validation Threshold | MSE $\ge$ 1.2913 | Score $\le$ -0.0774 | Extended sensitivity |
+| | Actual Test Benign FPR | **0.423%** (1,269 FP) | 0.977% (2,930 FP) | Well under 2.0% budget |
+| | Attack Detection Recall | **13.54%** (32,686 attacks) | **0.83%** (1,992 attacks) | **16.3x higher recall** |
+| **FPR $\le$ 5.0%** | Calibrated Validation Threshold | MSE $\ge$ 0.2445 | Score $\le$ -0.0178 | High-sensitivity hunting |
+| | Actual Test Benign FPR | **2.017%** (6,051 FP) | 4.162% (12,487 FP) | Conservative on benign |
+| | Attack Detection Recall | **19.36%** (46,721 attacks) | **1.23%** (2,958 attacks) | **15.7x higher recall** |
+
+> [!NOTE]
+> ***Isolation Forest Score Plateau Audit Finding:** The 0.1% and 0.5% target FPR operating points for Isolation Forest both resolve to the exact same threshold score (`-0.13326530124088404`), producing identical test FPR (0.060%) and attack recall (0.67%). Independent inspection of the 200,000 validation benign flows confirms that **1,196 flows have the exact same decision score of -0.13326530**, creating a flat plateau spanning from the 0.0895th percentile to the 0.6875th percentile. Because both the 0.1% rank (200th flow) and 0.5% rank (1,000th flow) land inside this tie group, standard percentile interpolation produces the identical threshold. This is an empirical property of discrete path lengths in tree ensembles on repetitive network traffic, not a calibration defect.
 
 ```
-Zero-Day Attack Recall at 5.0% False Positive Budget (241,345 Attack Flows):
-PyTorch Deep Autoencoder: [█████████████                      ] 27.28% Recall (65,839 Attacks Flagged)
-Isolation Forest:         [█▍                                 ]  2.92% Recall ( 7,047 Attacks Flagged)
+Zero-Day Attack Recall at 1.0% False Positive Budget (241,345 Attack Flows):
+PyTorch Deep Autoencoder: [███████                           ] 13.54% Recall (32,686 Attacks Flagged)
+Isolation Forest:         [▍                                  ]  0.80% Recall ( 1,932 Attacks Flagged)
 ```
 
 ---

@@ -36,17 +36,19 @@ This report documents the end-to-end execution of the **Role 3 Retraining V2** m
 
 All five candidate models were evaluated on the **exact same 541,345 authentic network flows**:
 
-| Candidate Model | Feature Set | Accuracy | Macro-F1 | Weighted-F1 | Benign FPR | Attack FNR (Missed) | Latency (µs) | Throughput (flows/s) | Training Time |
+| Candidate Model | Feature Set | Accuracy | Macro-F1 | Weighted-F1 | Benign FPR (Count) | Attack FNR (Missed) | Latency (@b1024) | Latency (@b1) | Training Time |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| **LightGBM (Primary Candidate)** | 77 Feat | **75.62%** | **0.8057** | **0.7719** | **35.87%** | **5.09%** (12,295) | 14.80 | 67,579 | **34.7 s** |
-| **LightGBM Port Ablation** | 78 (+Dst Port) | **76.26%** | **0.8259** | **0.7788** | **34.48%** | **5.43%** (13,101) | 15.10 | 66,225 | **35.8 s** |
-| **XGBoost Benchmark** | 77 Feat | **84.57%** | **0.8168** | **0.8157** | **1.02%** | **28.33%** (68,376) | **3.52** | **290,072** | 2,610 s (~43m) |
-| **HistGBT Benchmark** | 77 Feat | **73.66%** | **0.7189** | **0.7538** | **39.75%** | **4.36%** (10,516) | 5.01 | 278,734 | 1,512 s (~25m) |
-| **Random Forest Baseline** | 77 Feat | **82.02%** | **0.7861** | **0.7932** | **0.78%** | **34.28%** (82,728) | 22.45 | 44,543 | 48.2 s |
+| **LightGBM (Primary Candidate)** | 77 Feat | **75.62%** | **0.8057** | **0.7719** | **35.87%** (107,598 FP) | **5.09%** (12,295) | **14.84 µs** | 195.2 µs | **34.7 s** |
+| **LightGBM Port Ablation** | 78 (+Dst Port) | **76.26%** | **0.8259** | **0.7788** | **34.48%** (103,439 FP) | **5.43%** (13,101) | **15.10 µs** | 205.0 µs | **35.8 s** |
+| **XGBoost Benchmark** | 77 Feat | **84.57%** | **0.8168** | **0.8157** | **1.02%** (3,058 FP) | **28.33%** (68,376) | **1.97 µs** | 128.6 µs | 2,610 s (~43m) |
+| **HistGBT Benchmark** | 77 Feat | **73.66%** | **0.7189** | **0.7538** | **39.75%** (119,259 FP) | **4.36%** (10,516) | **5.01 µs** | 145.2 µs | 1,512 s (~25m) |
+| **Random Forest Baseline** | 77 Feat | **82.02%** | **0.7861** | **0.7932** | **0.78%** (2,343 FP) | **34.28%** (82,728) | **8.89 µs** | 240.5 µs | 48.2 s |
+
+> **Single-Flow vs. Batched Latency Note:** Individual flow latency without batching (@ $b=1$) includes Python/C++ boundary and tensor initialization overhead. When processing streaming buffers (@ $b=1024$), tree traversal and SIMD tensor operations amortize down to 1.97 µs (XGBoost), 0.22 µs (Autoencoder), and 14.84 µs (LightGBM).
 
 ### Strategic SOC Deployment Guidance:
 - **For Threat Hunting & Incident Response (Tier-2)**: Deploy **LightGBM Primary**, which detects **94.91% of all cyber attacks** (missing only 5.09% of threats; 86.74% on Infiltration, 81.08% on XSS, 81.72% on Web Brute Force).
-- **For Automated Perimeter Blocking (Tier-1 Firewall)**: Deploy **XGBoost Benchmark**, which suppresses false alarms down to **1.02% FPR** (98.98% specificity), preventing disruptions to normal enterprise traffic.
+- **For Automated Perimeter Blocking (Tier-1 Firewall)**: Deploy **XGBoost Benchmark**, which suppresses false alarms down to **1.02% FPR** (98.98% specificity; exactly 3,058 false alarms out of 300,000 benign test flows).
 
 ---
 
@@ -56,13 +58,13 @@ Evaluated across operational false positive rate budgets strictly calibrated on 
 
 | Target FPR Budget | PyTorch Deep Autoencoder (Test FPR / Recall) | Isolation Forest Baseline (Test FPR / Recall) | Autoencoder Advantage |
 | :---: | :---: | :---: | :---: |
-| **FPR $\le$ 0.1%** | **0.09%** / **0.60%** | 0.11% / 0.06% | **10.0x higher recall** |
-| **FPR $\le$ 0.5%** | **0.74%** / **1.08%** | 0.52% / 0.72% | **1.5x higher recall** |
-| **FPR $\le$ 1.0%** | **1.14%** / **4.52%** | 0.68% / 0.88% | **5.1x higher recall** |
-| **FPR $\le$ 2.0%** | **1.83%** / **9.77%** | 1.35% / 1.40% | **7.0x higher recall** |
-| **FPR $\le$ 5.0%** | **4.36%** / **27.28%** | 4.93% / 2.92% | **9.3x higher recall** |
-| **Inference Latency** | **0.41 µs** (@ Batch 1024) | 3.05 µs (@ Batch 1024) | **7.4x lower latency** |
-| **Sustained Throughput** | **2,465,114 flows/sec** | 327,868 flows/sec | **19.6x higher throughput** |
+| **FPR $\le$ 0.1%** | **0.077%** / **0.47%** | 0.060% / 0.67% | Comparable extreme tail detection |
+| **FPR $\le$ 0.5%** | **0.158%** / **3.96%** | 0.060%* / 0.67%* | **5.9x higher recall** (*IF tied on plateau) |
+| **FPR $\le$ 1.0%** | **0.423%** / **13.54%** | 0.221% / 0.80% | **16.9x higher recall** |
+| **FPR $\le$ 2.0%** | **0.423%** / **13.54%** | 0.977% / 0.83% | **16.3x higher recall** |
+| **FPR $\le$ 5.0%** | **2.017%** / **19.36%** | 4.162% / 1.23% | **15.7x higher recall** |
+| **Inference Latency** | **0.22 µs** (@ Batch 1024) / 34.6 µs (@ b1) | 4.93 µs (@ Batch 1024) / 1,200 µs (@ b1) | **22.4x lower latency** |
+| **Sustained Throughput** | **4,597,939 flows/sec** | 202,856 flows/sec | **22.7x higher throughput** |
 
 ---
 
