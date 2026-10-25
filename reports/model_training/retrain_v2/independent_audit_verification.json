@@ -1,0 +1,195 @@
+{
+  "models_verified": {
+    "lightgbm_primary_candidate": {
+      "status": "EXACT PASS",
+      "recomputed_accuracy": 0.7561776685847288,
+      "reported_accuracy": 0.7561776685847288,
+      "recomputed_benign_fpr": 0.35866,
+      "reported_benign_fpr": 0.35866,
+      "recomputed_missed_attacks": 12295,
+      "reported_missed_attacks": 12295,
+      "recomputed_false_positives": 107598,
+      "reported_false_positives": 107598,
+      "infil_tp": 80722,
+      "infil_as_benign": 12249,
+      "infil_as_other_attack": 92,
+      "infil_recall": 0.8673909072348839,
+      "infil_reported_recall": 0.8673909072348839
+    },
+    "lightgbm_port_ablation": {
+      "status": "EXACT PASS",
+      "recomputed_accuracy": 0.762646740987725,
+      "reported_accuracy": 0.762646740987725,
+      "recomputed_benign_fpr": 0.34479666666666664,
+      "reported_benign_fpr": 0.34479666666666664,
+      "recomputed_missed_attacks": 13101,
+      "reported_missed_attacks": 13101,
+      "recomputed_false_positives": 103439,
+      "reported_false_positives": 103439,
+      "infil_tp": 79995,
+      "infil_as_benign": 13059,
+      "infil_as_other_attack": 9,
+      "infil_recall": 0.8595789948744399,
+      "infil_reported_recall": 0.8595789948744399
+    },
+    "xgboost_benchmark": {
+      "status": "EXACT PASS",
+      "recomputed_accuracy": 0.8456899020033435,
+      "reported_accuracy": 0.8456899020033435,
+      "recomputed_benign_fpr": 0.010193333333333334,
+      "reported_benign_fpr": 0.010193333333333334,
+      "recomputed_missed_attacks": 68376,
+      "reported_missed_attacks": 68376,
+      "recomputed_false_positives": 3058,
+      "reported_false_positives": 3058,
+      "infil_tp": 24679,
+      "infil_as_benign": 68257,
+      "infil_as_other_attack": 127,
+      "infil_recall": 0.26518594930316025,
+      "infil_reported_recall": 0.26518594930316025
+    },
+    "random_forest_baseline": {
+      "status": "EXACT PASS",
+      "recomputed_accuracy": 0.8201904515604651,
+      "reported_accuracy": 0.8201904515604651,
+      "recomputed_benign_fpr": 0.00781,
+      "reported_benign_fpr": 0.00781,
+      "recomputed_missed_attacks": 82728,
+      "reported_missed_attacks": 82728,
+      "recomputed_false_positives": 2343,
+      "reported_false_positives": 2343,
+      "infil_tp": 10419,
+      "infil_as_benign": 82373,
+      "infil_as_other_attack": 271,
+      "infil_recall": 0.11195641662099867,
+      "infil_reported_recall": 0.11195641662099867
+    },
+    "histgbt_benchmark": {
+      "status": "EXACT PASS",
+      "recomputed_accuracy": 0.7365949625469894,
+      "reported_accuracy": 0.7365949625469894,
+      "recomputed_benign_fpr": 0.39753,
+      "reported_benign_fpr": 0.39753,
+      "recomputed_missed_attacks": 10516,
+      "reported_missed_attacks": 10516,
+      "recomputed_false_positives": 119259,
+      "reported_false_positives": 119259,
+      "infil_tp": 82068,
+      "infil_as_benign": 10508,
+      "infil_as_other_attack": 487,
+      "infil_recall": 0.8818542277811805,
+      "infil_reported_recall": 0.8818542277811805
+    }
+  },
+  "discrepancies": [],
+  "latency_benchmarks": {
+    "prep_b1": {
+      "batch_median_us": 66.771,
+      "batch_p95_us": 70.88125,
+      "per_flow_us": 66.771,
+      "throughput_fps": 14976.561680969284
+    },
+    "LightGBM_b1": {
+      "batch_median_us": 195.229,
+      "batch_p95_us": 205.95805,
+      "per_flow_us": 195.229,
+      "throughput_fps": 5122.189838599797
+    },
+    "XGBoost_b1": {
+      "batch_median_us": 128.6045,
+      "batch_p95_us": 350.4271,
+      "per_flow_us": 128.6045,
+      "throughput_fps": 7775.777674964717
+    },
+    "IsolationForest_b1": {
+      "batch_median_us": 1200.417,
+      "batch_p95_us": 1421.1018000000001,
+      "per_flow_us": 1200.417,
+      "throughput_fps": 833.0438505952516
+    },
+    "Autoencoder_b1": {
+      "batch_median_us": 34.625,
+      "batch_p95_us": 35.296150000000004,
+      "per_flow_us": 34.625,
+      "throughput_fps": 28880.86642599278
+    },
+    "prep_b64": {
+      "batch_median_us": 85.542,
+      "batch_p95_us": 96.8402,
+      "per_flow_us": 1.33659375,
+      "throughput_fps": 748170.4893502607
+    },
+    "LightGBM_b64": {
+      "batch_median_us": 1016.0205,
+      "batch_p95_us": 1129.1235499999998,
+      "per_flow_us": 15.8753203125,
+      "throughput_fps": 62990.85500735468
+    },
+    "XGBoost_b64": {
+      "batch_median_us": 475.104,
+      "batch_p95_us": 1401.6451999999986,
+      "per_flow_us": 7.4235,
+      "throughput_fps": 134707.348285849
+    },
+    "IsolationForest_b64": {
+      "batch_median_us": 1375.7495,
+      "batch_p95_us": 1543.9976000000001,
+      "per_flow_us": 21.4960859375,
+      "throughput_fps": 46520.09686356419
+    },
+    "Autoencoder_b64": {
+      "batch_median_us": 96.104,
+      "batch_p95_us": 106.61104999999999,
+      "per_flow_us": 1.501625,
+      "throughput_fps": 665945.2260051611
+    },
+    "prep_b1024": {
+      "batch_median_us": 251.063,
+      "batch_p95_us": 256.92535,
+      "per_flow_us": 0.2451787109375,
+      "throughput_fps": 4078657.548105456
+    },
+    "LightGBM_b1024": {
+      "batch_median_us": 15197.5415,
+      "batch_p95_us": 15824.1728,
+      "per_flow_us": 14.84134912109375,
+      "throughput_fps": 67379.31921422949
+    },
+    "XGBoost_b1024": {
+      "batch_median_us": 2015.396,
+      "batch_p95_us": 2483.0336999999995,
+      "per_flow_us": 1.96816015625,
+      "throughput_fps": 508088.73293387506
+    },
+    "IsolationForest_b1024": {
+      "batch_median_us": 5047.9165,
+      "batch_p95_us": 5326.4625,
+      "per_flow_us": 4.92960595703125,
+      "throughput_fps": 202855.97037906628
+    },
+    "Autoencoder_b1024": {
+      "batch_median_us": 222.7085,
+      "batch_p95_us": 231.6705,
+      "per_flow_us": 0.21748876953125,
+      "throughput_fps": 4597938.560944014
+    },
+    "E2E_XGB_AE_b1": {
+      "batch_median_us": 1683.375,
+      "batch_p95_us": 1844.25,
+      "per_flow_us": 1683.375,
+      "throughput_fps": 594.0447018638152
+    },
+    "E2E_XGB_AE_b64": {
+      "batch_median_us": 2385.6455,
+      "batch_p95_us": 2999.520799999998,
+      "per_flow_us": 37.2757109375,
+      "throughput_fps": 26827.120793931874
+    },
+    "E2E_XGB_AE_b1024": {
+      "batch_median_us": 10576.625,
+      "batch_p95_us": 12066.357799999996,
+      "per_flow_us": 10.3287353515625,
+      "throughput_fps": 96817.27394135653
+    }
+  }
+}
