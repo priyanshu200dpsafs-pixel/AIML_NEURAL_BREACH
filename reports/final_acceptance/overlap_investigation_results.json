@@ -1,0 +1,56 @@
+{
+  "total_test_flows": 541345,
+  "overlapping_flows_in_train": 166514,
+  "overlap_percentage": 30.75931245324146,
+  "overlap_in_val": 127597,
+  "overlap_by_class": {
+    "Benign": 65525,
+    "Bot": 9868,
+    "DoS attacks-SlowHTTPTest": 20000,
+    "DoS attacks-Hulk": 9448,
+    "Brute Force -Web": 18,
+    "Brute Force -XSS": 2,
+    "Infiltration": 26198,
+    "DoS attacks-GoldenEye": 16,
+    "DoS attacks-Slowloris": 27,
+    "FTP-BruteForce": 20000,
+    "SSH-Bruteforce": 9955,
+    "DDOS attack-HOIC": 5457
+  },
+  "total_by_class": {
+    "Benign": 300000,
+    "Bot": 20000,
+    "DoS attacks-SlowHTTPTest": 20000,
+    "DoS attacks-Hulk": 20000,
+    "Brute Force -Web": 93,
+    "Brute Force -XSS": 37,
+    "SQL Injection": 15,
+    "DDoS attacks-LOIC-HTTP": 20000,
+    "Infiltration": 93063,
+    "DoS attacks-GoldenEye": 6227,
+    "DoS attacks-Slowloris": 1650,
+    "FTP-BruteForce": 20000,
+    "SSH-Bruteforce": 20000,
+    "DDOS attack-LOIC-UDP": 260,
+    "DDOS attack-HOIC": 20000
+  },
+  "matching_label_count": 152500,
+  "contradictory_label_count": 14014,
+  "deduplicated_test_set_size": 374831,
+  "deduplicated_metrics": {
+    "lightgbm": {
+      "accuracy": 0.8077106749441748,
+      "macro_f1": 0.7904128805725238,
+      "benign_fpr": 0.2604286171233607,
+      "attack_recall": 0.9218986007010744,
+      "infiltration_recall": 0.8365063934793988
+    },
+    "xgboost": {
+      "accuracy": 0.8623272888315001,
+      "macro_f1": 0.7226150831692341,
+      "benign_fpr": 0.007327007143618723,
+      "attack_recall": 0.6454586907577874,
+      "infiltration_recall": 0.2554849323263292
+    }
+  }
+}
