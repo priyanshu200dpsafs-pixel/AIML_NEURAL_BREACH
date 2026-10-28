@@ -13,17 +13,21 @@
 
 ### 1. Master Audit Verdict & Executive Summary
 
-Following a strict, evidence-first, independent audit of all machine learning models, training pipelines, preprocessors, evaluation metrics, adversarial stress tests, and deployed inference engines, the formal auditor verdict is:
+Following a strict, evidence-first, independent audit of all machine learning models, training pipelines, preprocessors, evaluation metrics, adversarial stress tests, and deployed inference engines, the formal auditor decision is:
 
-$$\Large\mathbf{B.\;COMPLETE\;WITH\;CAVEATS}$$
+$$\Large\mathbf{ROLE\;3\;AND\;ROLE\;4:\;COMPLETE\;WITH\;CAVEATS\;FOR\;THE\;RESEARCH\;PROTOTYPE.}$$
 
-### Verdict Justification
+### Operational Integration Directive
+The models may proceed to Role 6 backend integration in **observe-only mode**. The repeatedly evaluated test results across all partitions remain strictly **exploratory benchmarks**. The team must **not claim production readiness, universal attack detection, or authorization for automatic blocking**.
+
+### Decision Justification & Core Caveats
 Both **Role 3 (Machine Learning & Anomaly Detection)** and **Role 4 (Model Evaluation & Red-Team Validation)** have delivered authentic, reproducible, mathematically verified, and fully audited code and artifacts. Crucially, direct model predictions match the production `CyberDefenseInferenceEngine` across **100% of the 541,345 test flows with 0 mismatches**.
 
-However, the system cannot be designated "Unconditionally Complete" (Verdict A) due to three fundamental operational realities that Role 6 must account for during backend integration:
-1. **The Single-Model Dilemma (Operational Polarization):** No single monolithic model satisfies all security requirements. LightGBM achieves high sensitivity (94.91% attack recall, 86.74% infiltration recall) but generates 107,598 false alarms (35.87% FPR). Conversely, XGBoost achieves near-zero false alarms (1.02% FPR, 3,058 false alarms) and ultra-high throughput (1.58 µs/flow), but misses 73.48% of stealthy infiltration attacks.
-2. **Layer-7 Web Exploit Blindness:** Flow-level network telemetry lacks packet payload inspection. Adversarial payload padding reduces web attack recall below 35%, and SQL Injection detection achieves only 26.67% recall. The platform cannot serve as a standalone Web Application Firewall (WAF).
-3. **Partition Re-Use Status:** Because the 541,345-flow test partition was queried multiple times during historical audits and threshold calibration rounds, its performance estimates must be classified formally as **exploratory benchmarks** rather than a pristine untouched lockbox.
+However, the platform is certified strictly as a **research prototype with documented caveats** due to four foundational operational constraints:
+1. **Observe-Only Mode Mandate:** The models are unauthorized for automated inline packet dropping. They must operate in telemetry-monitoring / shadow mode, feeding alerts to security analysts without interrupting live traffic.
+2. **The Single-Model Dilemma (Operational Polarization):** LightGBM achieves high sensitivity (94.91% attack recall, 86.74% infiltration recall) but generates 107,598 false alarms (35.87% FPR). Conversely, XGBoost achieves near-zero false alarms (1.02% FPR, 3,058 false alarms) and ultra-high throughput (1.58 µs/flow), but misses 73.48% of stealthy infiltration attacks.
+3. **Layer-7 Web Exploit Blindness:** Flow-level network telemetry lacks packet payload inspection. Adversarial payload padding reduces web attack recall below 35%, and SQL Injection detection achieves only 26.67% recall. The platform cannot serve as a standalone Web Application Firewall (WAF).
+4. **Exploratory Status of Re-Evaluated Test Partitions:** Because the 541,345-flow test partition was queried multiple times during historical audits and threshold calibration rounds, its performance estimates are classified formally as **exploratory benchmarks** rather than a pristine untouched holdout. Furthermore, on deduplicated evaluation, `SlowHTTPTest` and `FTP-BruteForce` drop to zero support and their detection is unverified on that subset.
 
 ---
 
@@ -34,7 +38,7 @@ However, the system cannot be designated "Unconditionally Complete" (Verdict A) 
 | Audit Check | Standard / Requirement | Empirical Audit Finding | Status |
 | :--- | :--- | :--- | :---: |
 | **Authentic Training Data** | Train on genuine captured benchmark data; zero synthetic data generation. | 1,327,476 authentic partition rows processed across 10 CSE-CIC-IDS2018 capture days. | **PASS** |
-| **Model Artifact Integrity** | Bit-for-bit checksum reproducibility; zero corruption or missing weights. | All 9 model binaries verified against documented SHA-256 hashes; clean Python loading. | **PASS** |
+| **Model Artifact Integrity** | Bit-for-bit checksum reproducibility; zero corruption or missing weights. | Verified artifact inventory: six supervised model files, two anomaly model files, and one scaler artifact verified against documented SHA-256 hashes; clean Python loading. | **PASS** |
 | **Partition Splitting Design** | Leakage-free, capture-aware splitting preserving temporal ordering. | Stratified chronological splitting: Feb 28 Infiltration in Train; Mar 01 Infiltration in Test. | **PASS** |
 | **Preprocessing Provenance** | Preprocessors fitted strictly on training data; zero evaluation leakage. | `StandardScaler` mean diff against train benign flows is zero; 0 leaked metadata IDs. | **PASS** |
 | **Metrics Calculation Rigor** | Accurate formulas, correct denominators, distinction of binary vs multiclass. | Recomputed all metrics using single-source metrics engine with automated mathematical assertions. | **PASS** |
@@ -80,12 +84,12 @@ is_benign_pred = (lgb_probs[:, benign_idx] >= 0.6720)
   This dramatically *lowered* the attack threshold to 0.3280, making the model aggressively sensitive to attacks, which naturally inflated false alarms to **45.17% (135,496 FP)** while boosting attack recall to **97.77%**.
 - **Reconciliation Verdict:** Both calculations are mathematically reproducible under their respective code semantics. **Formulation 1 ($P(\text{Attack}) \ge 0.6720$) is the intended low-FPR operational mode.**
 
-#### B. Verification of XGBoost Blocking Threshold (0.85)
+#### B. Verification of XGBoost Confidence Threshold (0.85)
 Prior documentation claimed the 0.85 probability threshold ensures low false alarms. Direct evaluation on both validation and holdout test partitions confirms:
 - **Validation Set (313,269 flows):** Benign FPR = **0.098%** (196 false alarms out of 200,000 benign flows).
 - **Holdout Test Set (541,345 flows):** Benign FPR = **0.038%** (115 false alarms out of 300,000 benign flows).
 - **Test Precision:** **99.92%** | **Attack Recall:** **61.56%** (148,575 attacks detected, 92,770 missed).
-- **Verdict:** PASS. The 0.85 threshold operates with extreme precision ($> 99.9\%$), making it safe for automated inline packet dropping.
+- **Verdict:** PASS (EXPLORATORY BENCHMARK ONLY). While the 0.85 threshold exhibits high precision in offline exploratory evaluation, **automatic inline packet blocking is strictly UNAUTHORIZED**. The platform is restricted to observe-only telemetry monitoring.
 
 #### C. Full-Dataset Inference Parity (All 541,345 Flows)
 Prior audits noted that parity between raw scikit-learn models and `CyberDefenseInferenceEngine` had only been verified on a 2,000-flow sample. During this audit:
@@ -114,11 +118,13 @@ Prior audits noted that parity between raw scikit-learn models and `CyberDefense
 
 ### 5. Architectural Handoff to Role 6
 
-Role 6 must implement the **Tiered Defense-in-Depth Pipeline**:
-1. **Tier 1 (Inline Dropping):** Deploy `supervised_xgboost_benchmark.joblib` with threshold $\tau = 0.85$. Latency: 1.58 µs/flow. False alarm rate: 0.038%. Safe for automated blocking.
-2. **Tier 2 (SOC Threat Hunting):** Deploy `supervised_lightgbm_primary.joblib` with $P(\text{Attack}) \ge 0.6720$ for flows classified as Benign by Tier 1. Captures stealthy Infiltration and brute-force reconnaissance without flooding analysts.
-3. **Tier 3 (Zero-Day Anomaly Detection):** Route flows through `anomaly_deep_autoencoder.pt` ($\text{MSE} \ge 1.29126$) to detect timing-dilated and structurally distorted novel attacks.
-4. **Strict Constraint:** Never load `supervised_lightgbm_with_port.joblib` (causes 99.997% evasion drop on non-standard ports).
+Role 6 must integrate the models strictly under an **OBSERVE-ONLY Telemetry Architecture**:
+1. **Observe-Only Mode Mandate:** The platform is a research prototype. Automatic blocking is strictly UNAUTHORIZED. All models must run in observe-only / shadow mode, emitting alerts to security dashboards and logging pipelines without interrupting network traffic.
+2. **Tier 1 (High-Precision Threat Telemetry):** Deploy `supervised_xgboost_benchmark.joblib` with threshold $\tau = 0.85$ (1.58 µs/flow latency) to generate high-confidence alert notifications.
+3. **Tier 2 (SOC Threat Hunting):** Deploy `supervised_lightgbm_primary.joblib` with $P(\text{Attack}) \ge 0.6720$ for flows classified as Benign by Tier 1. Highlights potential stealthy Infiltration and reconnaissance for security analyst investigation.
+4. **Tier 3 (Zero-Day Anomaly Scoring):** Route flows through `anomaly_deep_autoencoder.pt` ($\text{MSE} \ge 1.29126$) to score structural and timing anomalies.
+5. **Strict Constraint:** Never load `supervised_lightgbm_with_port.joblib` (causes 99.997% evasion drop on non-standard ports).
+6. **No Universal Detection Claims:** Do not claim universal attack detection or complete threat coverage. Tabular flow telemetry remains blind to application-layer payload exploits.
 
 ---
 

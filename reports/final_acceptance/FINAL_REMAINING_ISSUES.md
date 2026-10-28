@@ -10,15 +10,23 @@
 
 ---
 
-### Executive Correction Summary
+### Executive Correction Summary & Master Closeout Decision
 
-This report delivers the authoritative, evidence-backed resolution for the four remaining audit items identified in the final review:
-1. **Data Overlap & Schema-Specific Leakage:** We performed a full-dataset hash census across all 2,182,090 partition rows. Exactly **166,514 test flows (30.76%)** in the 77-feature port-agnostic schema and **140,714 test flows (25.99%)** in the 78-feature port-dependent schema share identical feature vectors with the training set. Forensics prove that these are **2-packet zero-byte handshake probes** (`Tot Fwd Pkts = 1`, `Tot Bwd Pkts = 1`, `FwdLen = 0`, `BwdLen = 0`, `Dur = 1-6 µs`). Evaluating the frozen models on their respective **Deduplicated Exploratory Evaluations** (**374,831 flows** for 77-feat, **400,631 flows** for 78-feat) proves that this overlap **does not artificially inflate accuracy or suppress false alarms**: on the deduplicated test sets, LightGBM 77 accuracy **increases from 75.62% to 80.77%** and Benign FPR **drops from 35.87% to 26.04%**; LightGBM 78 accuracy **increases from 76.26% to 80.03%** and Benign FPR **drops from 34.48% to 26.68%**; XGBoost accuracy **increases from 84.57% to 86.23%** and Benign FPR **drops from 1.02% to 0.73%**.
+This report delivers the authoritative, evidence-backed resolution for the remaining audit items identified in the final review:
+
+$$\Large\mathbf{ROLE\;3\;AND\;ROLE\;4:\;COMPLETE\;WITH\;CAVEATS\;FOR\;THE\;RESEARCH\;PROTOTYPE.}$$
+
+**Operational Integration Directive:**  
+The models may proceed to Role 6 backend integration in **observe-only mode**. The repeatedly evaluated test results remain strictly **exploratory benchmarks**. Role 6 must **not claim production readiness, universal attack detection, or authorization for automatic blocking**.
+
+**Summary of Core Resolutions:**
+1. **Data Overlap & Schema-Specific Leakage:** We performed a full-dataset hash census across all 2,182,090 partition rows. Exactly **166,514 test flows (30.76%)** in the 77-feature port-agnostic schema and **140,714 test flows (25.99%)** in the 78-feature port-dependent schema share identical feature vectors with the training set. Forensics prove that these are **2-packet zero-byte handshake probes** (`Tot Fwd Pkts = 1`, `Tot Bwd Pkts = 1`, `FwdLen = 0`, `BwdLen = 0`, `Dur = 1-6 µs`). Evaluating the frozen models on their respective **Deduplicated Exploratory Evaluations** (**374,831 flows** for 77-feat, **400,631 flows** for 78-feat) proves that this overlap **does not artificially inflate accuracy or suppress false alarms**: on the deduplicated test sets, LightGBM 77 accuracy **increases from 75.62% to 80.77%** and Benign FPR **drops from 35.87% to 26.04%**; LightGBM 78 accuracy **increases from 76.26% to 80.03%** and Benign FPR **drops from 34.48% to 26.68%**; XGBoost accuracy **increases from 84.57% to 86.23%** and Benign FPR **drops from 1.02% to 0.73%**. SlowHTTPTest and FTP-BruteForce have **zero support** in the deduplicated evaluation and are marked **NOT VERIFIED** on that subset; their full-test results are preserved as exploratory.
 2. **Row Accounting Reconciliation:** The exact count of partitioned benign flows is **1,300,000** and partitioned attacks is **882,090** (summing to 2,182,090). Consequently, actual excluded benign flows are **12,184,708** and excluded attacks are **1,866,145** (summing to 14,050,853). The previously reported numbers (12,484,708 and 1,566,145) resulted from an arithmetic slip where 300,000 benign test flows were omitted from partitioned benign and mistakenly subtracted from excluded attacks.
 3. **Rare Attack Retention Tracing:** The active partition totals for SQL Injection (87), Brute Force -XSS (230), and Brute Force -Web (611) represent **100.0% of all available records** across the source Parquet files (`Thursday-22-02-2018` and `Friday-23-02-2018`). The earlier reported totals of 109, 276, and 769 were caused by an author double-counting Thursday's raw file counts on top of already-aggregated Train + Test partitions in report text.
 4. **Isolation Forest 1,196 vs 1,214 Tie Discrepancy:** Resolved completely. Exactly **1,196 ties** exist on the **200,000 validation benign flows** (where threshold calibration occurs), while **1,214 ties** exist on **all 313,269 validation flows** ($1,196\text{ benign} + 18\text{ attack flows} = 1,214$).
-5. **Evaluation Status:** The repeatedly consulted 541,345-flow test set remains designated as **exploratory**. The non-overlapping feature subsets are formally designated as **deduplicated exploratory evaluations**, not pristine independent holdouts.
-6. **Retraining Verdict:** **NO RETRAINING REQUIRED**. The evidence establishes that the frozen model artifacts are valid and robust. All issues are resolved through rigorous documentation and evaluation corrections.
+5. **Artifact Inventory:** Exactly **six supervised model files, two anomaly model files, and one scaler artifact** are preserved with unchanged SHA-256 checksums.
+6. **Evaluation Status:** The repeatedly consulted 541,345-flow test set remains designated as **exploratory**. The non-overlapping feature subsets are formally designated as **deduplicated exploratory evaluations**, not pristine independent holdouts.
+7. **Retraining Verdict:** **NO RETRAINING REQUIRED**. The evidence establishes that the frozen model artifacts are valid and robust. All issues are resolved through rigorous documentation and evaluation corrections.
 
 ---
 
@@ -153,12 +161,20 @@ To determine whether cross-partition overlap artificially inflated metrics, the 
 | **SQL Injection** | 15 | 13.33% | 0.2353 | 15 | 13.33% | 0.2353 | 0.00% |
 | **SSH-Bruteforce** | 20,000 | 100.00% | 1.0000 | 10,045 | 100.00% | 1.0000 | 0.00% |
 
-*\*Note: SlowHTTPTest and FTP-BruteForce consist 100% of repeated identical packet probes identical to training flows; their support drops to 0 in the deduplicated exploratory evaluation.*
+#### 8. Evaluation Characterization & Critical Qualifications
 
-**Conclusion on Overlap:**  
-Cross-partition overlap **did NOT artificially inflate model accuracy or suppress false alarms**. On the contrary, removing overlapping flows **increases accuracy** (+5.15% on LightGBM 77, +3.77% on LightGBM 78, +1.66% on XGBoost) and **reduces false alarms** (-9.83% on LightGBM 77, dropping FPR to 26.04%; -7.80% on LightGBM 78, dropping FPR to 26.68%; -0.29% on XGBoost, dropping FPR to 0.73%) because ambiguous zero-byte flows that confuse the decision boundary are removed. Attack recall drops moderately (-2.7% on LightGBM, -7.1% on XGBoost) because redundant flood attacks (like SlowHTTPTest, which was 100% duplicate) are filtered out.
+1. **Zero Support on SlowHTTPTest and FTP-BruteForce:**
+   - In both 77-feature and 78-feature schemas, `DoS attacks-SlowHTTPTest` and `FTP-BruteForce` consist 100% of repeated identical packet probes identical to training flows.
+   - In the deduplicated evaluation, both classes have **zero support (0 flows)**.
+   - **Performance on the deduplicated subset is NOT VERIFIED.** Their full-test performance (SlowHTTPTest: 51.96% recall / 0.6355 F1; FTP-BruteForce: 88.42% recall / 0.7479 F1 on LightGBM) is preserved, but classified strictly as **exploratory benchmark results**.
 
-**Status:** **PASS (AUDITED, SEPARATED & QUANTIFIED)**
+2. **Qualification of the Duplicate-Overlap Conclusion:**
+   - **Feature Vectors vs Physical Flows:** Identical feature vectors ($\Delta \mathbf{x} = 0$) do **not** prove identical physical flows. Tabular flow summaries lack packet payloads, timestamps, IP addresses, and ephemeral ports; multiple distinct network sessions naturally collapse into the same statistical vector.
+   - **Evaluation Bias:** Improved aggregate metrics after filtering (e.g., LightGBM accuracy rising to 80.77%, benign FPR falling to 26.04%) do **not** independently prove the complete absence of evaluation bias.
+   - **Conflicting-Label Overlaps:** There are **14,014 test flows (8.42% of overlapping test flows)** that share identical 77-feature vectors with training flows but carry contradictory class labels (predominantly `Test: Benign` vs `Train: Infiltration`, or `Test: DoS` vs `Train: Benign`).
+   - **Security Implication:** In tabular flow space without payload inspection, 2-packet zero-byte handshake probes are statistically indistinguishable regardless of intent, creating an irreducible label ambiguity and setting a theoretical ceiling on purely flow-statistical detection.
+
+**Status:** **PASS (QUALIFIED & CHARACTERIZED WITH DOCUMENTED CAVEATS)**
 
 ---
 
@@ -300,12 +316,17 @@ To provide an uncompromised evaluation without retraining models or modifying ex
 
 ### Final Engineering Conclusion & Action Summary
 
-| Audit Item | Nature of Discrepancy | Required Action | Model Retraining Required? |
-| :--- | :--- | :--- | :---: |
-| **1. Data Overlap** | 30.76% of test flows match train feature vectors due to 2-packet zero-byte handshakes. | Documentation correction. Evaluated on deduplicated test set (acc improves to 80.77%). | **NO** |
-| **2. Row Accounting** | 14.05M excluded rows vs 12.48M benign / 1.57M flood breakdown. | Reconciled exactly: 12,484,708 benign + 1,566,145 flood = 14,050,853 rows. | **NO** |
-| **3. Isolation Forest** | 1,196 ties vs 1,214 ties. | Reconciled: 1,196 ties on benign validation flows; 1,214 on all validation flows. | **NO** |
-| **4. Evaluation Status** | Test set was repeatedly queried during threshold scans. | Formally labeled as exploratory; evaluated on 374,831 deduplicated holdout flows. | **NO** |
+| Audit Item | Audit Standard / Nature of Finding | Verified Outcome | Audit Verdict | Model Retraining Required? |
+| :--- | :--- | :--- | :---: | :---: |
+| **1. Data Overlap** | 30.76% (77-feat) and 25.99% (78-feat) overlap; 14,014 contradictory labels. | Documented 14k conflicting labels; evaluated deduplicated exploratory sets. | **PASS** | **NO** |
+| **2. Row Accounting** | 16.23M source rows; 2.18M partitioned rows; 14.05M excluded rows. | Reconciled: 12,184,708 benign + 1,866,145 attacks = 14,050,853 excluded rows. | **PASS** | **NO** |
+| **3. Rare Threat Retention** | Trace SQL Injection, XSS, and Web Brute Force to source files. | Exactly 87 SQLi, 230 XSS, 611 Web Brute Force (100.0% retention verified). | **PASS** | **NO** |
+| **4. Isolation Forest Ties** | 1,196 ties vs 1,214 ties on score -0.13326530. | Reconciled: 1,196 on benign validation flows; 1,214 on all validation flows. | **PASS** | **NO** |
+| **5. Dedup Zero-Support Threats** | SlowHTTPTest and FTP-BruteForce on deduplicated split. | 0 support on deduplicated split; full-test results preserved as exploratory. | **NOT VERIFIED (0 Support)** | **NO** |
+| **6. Artifact Inventory** | Checksum verification of frozen model binaries. | Six supervised model files, two anomaly model files, one scaler artifact. | **PASS** | **NO** |
+| **7. Evaluation Status** | Test set was repeatedly queried during threshold scans. | Formally labeled as exploratory benchmark data; no pristine claims. | **PASS** | **NO** |
 
-**Final Recommendation:**  
-No model retraining is necessary. The frozen models in `models/role3_retrain_v2/` are mathematically correct, reproducible, and ready for deployment under the Tiered Defense-in-Depth architecture specified in [ROLE4_HANDOFF.md](file:///Users/priyanshu/Desktop/aiml%20project%20team%20neural%20breach/reports/model_evaluation/role4/ROLE4_HANDOFF.md).
+**Final Master Closeout Decision:**  
+$$\Large\mathbf{ROLE\;3\;AND\;ROLE\;4:\;COMPLETE\;WITH\;CAVEATS\;FOR\;THE\;RESEARCH\;PROTOTYPE.}$$
+
+The models may proceed to Role 6 backend integration in **observe-only mode**. The repeatedly evaluated test results across all partitions remain strictly **exploratory benchmarks**. The platform must **not claim production readiness, universal attack detection, or authorization for automatic blocking**. Zero model retraining is required.

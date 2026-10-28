@@ -10,15 +10,21 @@
 
 ---
 
-### Executive Summary
+### Executive Summary & Master Closeout Decision
 
 In accordance with the audit directive, the auditor has verified all original dataset files, partition manifests, and model evaluations directly from raw Parquet tables and code execution. 
+
+$$\Large\mathbf{ROLE\;3\;AND\;ROLE\;4:\;COMPLETE\;WITH\;CAVEATS\;FOR\;THE\;RESEARCH\;PROTOTYPE.}$$
+
+**Operational Integration Directive:**  
+The models may proceed to Role 6 backend integration in **observe-only mode**. The repeatedly evaluated test results remain strictly **exploratory benchmarks**. Role 6 must **not claim production readiness, universal attack detection, or authorization for automatic blocking**.
 
 **Summary of Core Resolutions:**
 1. **Row Accounting Reconciliation:** The exact count of partitioned benign flows is **1,300,000** and partitioned attacks is **882,090** (summing to 2,182,090). Consequently, actual excluded benign flows are **12,184,708** and excluded attacks are **1,866,145** (summing to 14,050,853). The previously reported numbers (12.48M and 1.57M) resulted from an arithmetic slip where 300,000 benign test flows were omitted from partitioned benign and mistakenly subtracted from excluded attacks.
 2. **Rare Attack Retention Tracing:** The active partition totals for SQL Injection (87), Brute Force -XSS (230), and Brute Force -Web (611) represent **100.0% of all available records** across the source Parquet files (`Thursday-22-02-2018` and `Friday-23-02-2018`). The earlier reported totals of 109, 276, and 769 were a reporting error where Thursday's file totals (34, 79, and 249) were double-counted in report text.
-3. **Schema-Specific Duplicate Analysis:** Evaluated separately for the 77-feature port-agnostic schema (**166,514 overlapping flows / 30.76%**) and the 78-feature port-dependent schema (**140,714 overlapping flows / 25.99%**). Evaluated both models on their respective deduplicated subsets, establishing that overlap does not inflate accuracy or suppress false alarms.
-4. **Retraining Status:** **NO RETRAINING REQUIRED**. All discrepancies are reporting/arithmetic errors. The underlying model artifacts, features, and code are mathematically verified.
+3. **Schema-Specific Duplicate Analysis:** Evaluated separately for the 77-feature port-agnostic schema (**166,514 overlapping flows / 30.76%**) and the 78-feature port-dependent schema (**140,714 overlapping flows / 25.99%**). Evaluated both models on their respective deduplicated exploratory subsets. SlowHTTPTest and FTP-BruteForce have **zero support** in the deduplicated evaluation and are marked **NOT VERIFIED** on that subset; their full-test results are preserved as exploratory.
+4. **Artifact Inventory:** Exactly **six supervised model files, two anomaly model files, and one scaler artifact** are preserved with unchanged SHA-256 checksums.
+5. **Retraining Status:** **NO RETRAINING REQUIRED**. All discrepancies are reporting/arithmetic errors. The underlying model artifacts, features, and code are mathematically verified.
 
 ---
 
@@ -217,29 +223,37 @@ The auditor evaluated both models on their respective deduplicated subsets:
 | **SQL Injection** | 15 | 13.33% | 0.2353 | 15 | 13.33% | 0.2353 | 0.00% |
 | **SSH-Bruteforce** | 20,000 | 100.00% | 1.0000 | 10,045 | 100.00% | 1.0000 | 0.00% |
 
-#### Evaluation Characterization:
-The deduplicated feature subsets are formally designated as **deduplicated exploratory evaluations**, not pristine independent holdouts. 
+#### Evaluation Characterization & Critical Qualifications:
 
-**Analytical Takeaway:**
-1. Cross-partition duplicates consist of 2-packet zero-byte handshake probes (`FwdPkts=1`, `BwdPkts=1`, `Len=0`).
-2. Removing these ambiguous zero-byte tuples **improves accuracy** (+5.15% on LightGBM 77, +3.77% on LightGBM 78, +1.66% on XGBoost) and **reduces false alarms** (-9.83% on LightGBM 77, dropping FPR to 26.04%; -7.80% on LightGBM 78, dropping FPR to 26.68%; -0.29% on XGBoost, dropping FPR to 0.73%).
-3. The overlap did not artificially inflate accuracy or suppress false positives.
+1. **Zero Support on SlowHTTPTest and FTP-BruteForce:**
+   - In both 77-feature and 78-feature schemas, `DoS attacks-SlowHTTPTest` and `FTP-BruteForce` consist 100% of repeated identical packet probes identical to training flows.
+   - In the deduplicated evaluation, both classes have **zero support (0 flows)**.
+   - **Performance on the deduplicated subset is NOT VERIFIED.** Their full-test performance (SlowHTTPTest: 51.96% recall / 0.6355 F1; FTP-BruteForce: 88.42% recall / 0.7479 F1 on LightGBM) is preserved, but classified strictly as **exploratory benchmark results**.
 
-**Status:** **PASS (SEPARATED & RIGOROUSLY CHARACTERIZED)**
+2. **Qualification of the Duplicate-Overlap Conclusion:**
+   - **Feature Vectors vs Physical Flows:** Identical feature vectors ($\Delta \mathbf{x} = 0$) do **not** prove identical physical flows. Tabular flow summaries lack packet payloads, timestamps, IP addresses, and ephemeral ports; multiple distinct network sessions naturally collapse into the same statistical vector.
+   - **Evaluation Bias:** Improved aggregate metrics after filtering (e.g., LightGBM accuracy rising to 80.77%, benign FPR falling to 26.04%) do **not** independently prove the complete absence of evaluation bias.
+   - **Conflicting-Label Overlaps:** There are **14,014 test flows (8.42% of overlapping test flows)** that share identical 77-feature vectors with training flows but carry contradictory class labels (predominantly `Test: Benign` vs `Train: Infiltration`, or `Test: DoS` vs `Train: Benign`).
+   - **Security Implication:** In tabular flow space without payload inspection, 2-packet zero-byte handshake probes are statistically indistinguishable regardless of intent, creating an irreducible label ambiguity and setting a theoretical ceiling on purely flow-statistical detection.
+
+**Status:** **PASS (QUALIFIED & CHARACTERIZED WITH DOCUMENTED CAVEATS)**
 
 ---
 
 ### 4. Final Sign-Off & Verification Summary
 
-| Verification Item | Requirement | Measured Result | Audit Verdict |
+| Verification Item | Audit Standard / Requirement | Measured Result | Audit Verdict |
 | :--- | :--- | :--- | :---: |
 | **Source Records Accounting** | Verify exact 16.23M source counts | Exactly 16,232,943 rows verified across 10 Parquet files | **PASS** |
 | **Partition Exclusions** | Reconcile benign (12.18M) and attack (1.87M) exclusions | Reconciled: 12,184,708 benign + 1,866,145 attack = 14,050,853 | **PASS** |
 | **Rare Attack Retention** | Verify 100% retention on SQLi, XSS, Web Brute Force | Exactly 87 SQLi, 230 XSS, 611 Web Brute Force (100% retained) | **PASS** |
 | **Discrepancy Root Cause** | Explain 109, 276, 769 vs 87, 230, 611 | Thursday's raw file counts were double-counted in earlier report | **PASS** |
-| **Schema Overlap Separation** | Separate 77-feature (30.76%) from 78-feature (25.99%) overlap | Evaluated both schemas and reported deduplicated subsets | **PASS** |
-| **Evaluation Integrity** | Label deduplicated split as exploratory | Formally documented as deduplicated exploratory evaluations | **PASS** |
+| **Schema Overlap Separation** | Separate 77-feature (30.76%) from 78-feature (25.99%) overlap | Evaluated both schemas and documented per-class metrics | **PASS** |
+| **Dedup Zero-Support Status** | Report SlowHTTPTest & FTP-BruteForce on deduplicated split | 0 support in deduplicated evaluation; full-test labeled exploratory | **NOT VERIFIED (0 Support)** |
+| **Model Artifact Inventory** | Preserve exact inventory with unchanged SHA-256 hashes | Six supervised model files, two anomaly model files, one scaler artifact | **PASS** |
 | **Retraining Authorization** | Retrain only if material defect requires it | Zero training defect found; all models valid; retraining unnecessary | **PASS** |
 
-**Final Conclusion:**  
-All source counts, partition manifests, and rare attack retentions are reconciled and mathematically verified. The frozen model artifacts in `models/role3_retrain_v2/` remain unchanged, bit-for-bit reproducible, and fully certified for backend integration.
+**Final Master Closeout Decision:**  
+$$\Large\mathbf{ROLE\;3\;AND\;ROLE\;4:\;COMPLETE\;WITH\;CAVEATS\;FOR\;THE\;RESEARCH\;PROTOTYPE.}$$
+
+The models may proceed to Role 6 integration in **observe-only mode**. The repeatedly evaluated test results remain strictly **exploratory**. The platform must **not claim production readiness, universal attack detection, or authorization for automatic blocking**. Zero model retraining is required.
