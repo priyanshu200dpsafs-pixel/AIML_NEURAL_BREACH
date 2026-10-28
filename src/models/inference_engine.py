@@ -185,6 +185,11 @@ class CyberDefenseInferenceEngine:
             List of flow triage dictionaries containing multi-class predictions,
             probabilities, dual anomaly scores, and synthesized threat levels.
         """
+        if not isinstance(df, pd.DataFrame):
+            raise ModelInferenceError(f"Input must be a pandas DataFrame, received: {type(df)}")
+        if len(df) == 0:
+            return []
+
         X_clean, X_scaled = self.validate_and_preprocess(df)
         n_flows = len(df)
 

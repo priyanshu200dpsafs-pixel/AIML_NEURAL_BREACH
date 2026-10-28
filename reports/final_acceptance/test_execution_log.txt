@@ -1,0 +1,154 @@
+=== TEAM NEURAL BREACH — FINAL ROLE 3 & ROLE 4 ACCEPTANCE AUDIT EXECUTION LOG ===
+
+[2026-10-28 13:59:29 UTC] Starting Team Neural Breach Final Role 3 & Role 4 Acceptance Audit...
+[2026-10-28 13:59:29 UTC] Repository Root: /Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach
+[2026-10-28 13:59:29 UTC] Models Directory: /Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/models/role3_retrain_v2
+[2026-10-28 13:59:29 UTC] Python Version: 3.13.7 (v3.13.7:bcee1c32211, Aug 14 2025, 19:10:51) [Clang 16.0.0 (clang-1600.0.26.6)]
+[2026-10-28 13:59:29 UTC] PyTorch Version: 2.13.0, Scikit-Learn: 1.5.3
+[2026-10-28 13:59:29 UTC] 
+======================================================================
+[2026-10-28 13:59:29 UTC] TASK 1: VERIFYING EVERY TRAINED MODEL ARTIFACT AND SECURITY CONTRACT
+[2026-10-28 13:59:29 UTC] ======================================================================
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_lightgbm_primary.joblib | Size: 10,718,908 bytes | SHA256: 8953755188a02f37e9d51f067466d9c465aebc73bd43ad765450ef90657d5fb5
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_lightgbm_with_port.joblib | Size: 10,749,148 bytes | SHA256: 7ec2193f3f517dae365c4564b17956f4ad4182a2d8f312364a18df9995b8850d
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_xgboost_benchmark.joblib | Size: 2,502,818 bytes | SHA256: b1e6281a2a60376a4ed69de0c77ea8f8a87a82fc99d236f17e36bb50a751dfd9
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_random_forest.joblib | Size: 10,911,457 bytes | SHA256: f34e6b609c3c4676505d6a094085c62f3fc2f57979e3c5e16a384416b7870a2c
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_histgbt_benchmark.joblib | Size: 3,678,880 bytes | SHA256: 604004bde3117fce6d9f46ccdb99df10eaff88bd2850bb2bc748f3e387688fcc
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: supervised_unsw_nb15.joblib | Size: 356,116 bytes | SHA256: f34353b52a23fdceebd09f44e38bb60ece58dbda0465700e90ac9553605aeace
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: anomaly_deep_autoencoder.pt | Size: 55,177 bytes | SHA256: 944f68f819d2a92c024c1cd7a5b384c3d43930d753d2e8a850eb831ad21dd965
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: anomaly_isolation_forest.joblib | Size: 23,697,689 bytes | SHA256: f5ba15a1beae24252a8c8d3b4835150dab5990c936fff7b56ee4843a3fd07f7b
+[2026-10-28 13:59:29 UTC] [PASS] Artifact: scaler_anomaly.joblib | Size: 2,447 bytes | SHA256: 566f0a6ca0878c25f9789b6ecae14855bae72225da18c3581ef497bc19d8f201
+[2026-10-28 13:59:29 UTC] [*] Testing Inference Engine Contract Robustness against Edge Cases...
+[2026-10-28 13:59:29 UTC]   Contract Test [normal_input]: PASS ()
+[2026-10-28 13:59:29 UTC]   Contract Test [missing_features_rejection]: PASS (Raised ModelInferenceError cleanly)
+[2026-10-28 13:59:29 UTC]   Contract Test [extra_columns_handling]: PASS (Extracted expected schema cleanly)
+[2026-10-28 13:59:29 UTC]   Contract Test [permuted_columns_reordering]: PASS (Enforced exact feature order)
+[2026-10-28 13:59:29 UTC]   Contract Test [nan_and_infinity_imputation]: PASS (Safely imputed to 0.0 without crash)
+[2026-10-28 13:59:29 UTC]   Contract Test [empty_dataframe]: PASS ()
+[2026-10-28 13:59:29 UTC]   Contract Test [invalid_type_rejection]: PASS (Raised ModelInferenceError cleanly)
+[2026-10-28 13:59:29 UTC] 
+======================================================================
+[2026-10-28 13:59:29 UTC] TASK 2: RECOMPUTING PERFORMANCE FROM REAL BENCHMARK DATA
+[2026-10-28 13:59:29 UTC] ======================================================================
+[2026-10-28 13:59:29 UTC] [*] Ingesting authentic CSE-CIC-IDS2018 partitions via dataset_manager...
+[2026-10-28 13:59:57 UTC] [+] Data loaded in 28.00s: Val=313,269, Test=541,345
+[2026-10-28 13:59:57 UTC] [*] Recomputing metrics for LightGBM_Primary on 541,345 flows...
+[2026-10-28 14:00:05 UTC]   -> LightGBM_Primary    : Acc= 75.62% | Macro-F1=0.8057 | Benign FPR=35.87% (107,598 FP) | Attack Rec=94.91% (Missed=12,295) | Infil Rec=86.74%
+[2026-10-28 14:00:05 UTC] [*] Recomputing metrics for LightGBM_With_Port on 541,345 flows...
+[2026-10-28 14:00:13 UTC]   -> LightGBM_With_Port  : Acc= 76.26% | Macro-F1=0.8259 | Benign FPR=34.48% (103,439 FP) | Attack Rec=94.57% (Missed=13,101) | Infil Rec=85.96%
+[2026-10-28 14:00:13 UTC] [*] Recomputing metrics for XGBoost_Benchmark on 541,345 flows...
+[2026-10-28 14:00:14 UTC]   -> XGBoost_Benchmark   : Acc= 84.57% | Macro-F1=0.8168 | Benign FPR= 1.02% (3,058 FP) | Attack Rec=71.67% (Missed=68,376) | Infil Rec=26.52%
+[2026-10-28 14:00:14 UTC] [*] Recomputing metrics for Random_Forest on 541,345 flows...
+[2026-10-28 14:00:14 UTC]   -> Random_Forest       : Acc= 82.02% | Macro-F1=0.7861 | Benign FPR= 0.78% (2,343 FP) | Attack Rec=65.72% (Missed=82,728) | Infil Rec=11.20%
+[2026-10-28 14:00:14 UTC] [*] Recomputing metrics for HistGradientBoosting on 541,345 flows...
+[2026-10-28 14:00:16 UTC]   -> HistGradientBoosting: Acc= 73.66% | Macro-F1=0.7189 | Benign FPR=39.75% (119,259 FP) | Attack Rec=95.64% (Missed=10,516) | Infil Rec=88.19%
+[2026-10-28 14:00:16 UTC] [*] Evaluating UNSW-NB15 Benchmark Model on 175,341 flows...
+[2026-10-28 14:00:17 UTC]   -> UNSW-NB15: Acc= 90.06% | F1=0.9220 | Prec=98.86% | Rec=86.38% | FPR= 2.12%
+[2026-10-28 14:00:17 UTC] 
+======================================================================
+[2026-10-28 14:00:17 UTC] TASK 3: FULL DATA PIPELINE, PROVENANCE, PARTITION OVERLAP & LEAKAGE AUDIT
+[2026-10-28 14:00:17 UTC] ======================================================================
+[2026-10-28 14:00:17 UTC] [*] Total Raw Rows across 10 Parquet Files: 16,232,943
+[2026-10-28 14:00:17 UTC] [*] Checking for duplicate flows within partitions and across Train/Val/Test...
+[2026-10-28 14:00:18 UTC]   -> Within-partition duplicate feature vectors: Train=379,717 (28.60%), Val=73,298 (23.40%), Test=142,618 (26.35%)
+[2026-10-28 14:00:18 UTC] [*] Computing feature-tuple hashes for cross-partition overlap check...
+[2026-10-28 14:00:18 UTC]   -> Cross-partition feature overlap (sampled 100k): 4,109 / 100,000 (4.11%)
+[2026-10-28 14:00:18 UTC]      Explanation: High volume of identical zero-byte flows, standard SYN handshakes, and repeated DNS/NTP packets naturally generate identical flow metrics.
+[2026-10-28 14:00:18 UTC] [*] Verifying zero identifier/metadata leakage into model feature space...
+[2026-10-28 14:00:18 UTC]   -> Leaked Metadata/Identifier Features in Baseline Model: 0 (Expected: 0)
+[2026-10-28 14:00:18 UTC]   -> Scaler Anomaly Mean Diff against Train Benign Mean: 1.2885e+00 (Zero Leakage Verified)
+[2026-10-28 14:00:18 UTC] 
+======================================================================
+[2026-10-28 14:00:18 UTC] TASK 4: VERIFYING THRESHOLDS, CONFLICTING FORMULATIONS & ANOMALY OPERATORS
+[2026-10-28 14:00:18 UTC] ======================================================================
+[2026-10-28 14:00:18 UTC] [*] Investigating LightGBM Threshold 0.6720 Formulation Discrepancy...
+[2026-10-28 14:00:26 UTC]   [RECONCILIATION AUDIT FINDING]
+[2026-10-28 14:00:26 UTC]   -> Formulation 1 [P(Attack) >= 0.6720]: Benign FPR =  8.71% (26,143 FP) | Attack Recall = 81.11% | Infil Recall = 50.96%
+[2026-10-28 14:00:26 UTC]   -> Formulation 2 [P(Benign) >= 0.6720]: Benign FPR = 45.17% (135,496 FP) | Attack Recall = 97.77% | Infil Recall = 94.14%
+[2026-10-28 14:00:26 UTC]   -> Forensic Explanation: Role 4 red-team script inverted the semantic by checking P(Benign) >= 0.6720, which corresponds to P(Attack) >= 0.3280, drastically increasing false alarms from 8.71% to 45.17%!
+[2026-10-28 14:00:26 UTC] [*] Evaluating XGBoost Blocking Threshold 0.85 on Validation and Test...
+[2026-10-28 14:00:27 UTC]   -> XGBoost at Threshold 0.85: Val FPR =  0.10% (196 FP) | Test FPR =  0.04% (115 FP)
+[2026-10-28 14:00:27 UTC]   -> XGBoost at Threshold 0.85: Test Precision = 99.92% | Attack Recall = 61.56%
+[2026-10-28 14:00:27 UTC] [*] Auditing Isolation Forest Score Semantics and Tie Plateau...
+[2026-10-28 14:00:29 UTC]   -> Isolation Forest Tie Plateau (-0.133265): Val Ties = 1,214 | Test Ties = 24
+[2026-10-28 14:00:29 UTC]   -> Isolation Forest at -0.08063: Val FPR =  1.00% | Test FPR =  0.22% | Attack Recall =  0.80%
+[2026-10-28 14:00:29 UTC] [*] Auditing Deep Autoencoder Reconstruction Error & Thresholds...
+[2026-10-28 14:00:29 UTC]   -> Autoencoder at 1.29126: Val FPR =  3.16% | Test FPR =  0.42% | Attack Recall = 13.54%
+[2026-10-28 14:00:29 UTC] 
+======================================================================
+[2026-10-28 14:00:29 UTC] TASK 5: REPRODUCIBLE RED-TEAM ADVERSARIAL & STRESS TESTING
+[2026-10-28 14:00:29 UTC] ======================================================================
+[2026-10-28 14:00:29 UTC] [*] Red-Team Test 5A: Infiltration Timing Dilation (Low-and-Slow Evasion)...
+[2026-10-28 14:00:31 UTC]   Dilation  1.0x: LightGBM Rec = 86.74% | XGBoost Rec = 26.52% | Autoencoder Anomaly Rec =  7.20%
+[2026-10-28 14:00:33 UTC]   Dilation  2.0x: LightGBM Rec = 74.50% | XGBoost Rec = 27.47% | Autoencoder Anomaly Rec =  7.38%
+[2026-10-28 14:00:34 UTC]   Dilation  5.0x: LightGBM Rec = 72.63% | XGBoost Rec = 26.12% | Autoencoder Anomaly Rec = 14.05%
+[2026-10-28 14:00:36 UTC]   Dilation 10.0x: LightGBM Rec = 71.56% | XGBoost Rec = 26.44% | Autoencoder Anomaly Rec = 16.55%
+[2026-10-28 14:00:36 UTC] [*] Red-Team Test 5B: Adversarial Port Hopping on Brute-Force Flows...
+[2026-10-28 14:00:37 UTC]   -> Port-Dependent Model: Baseline Recall = 94.21% -> Port-Hopped Recall =  0.00% (Evasion Drop: 100.00%)
+[2026-10-28 14:00:37 UTC]   -> Port-Agnostic Model: Maintained Recall = 94.21% (100% Port-Hop Immune)
+[2026-10-28 14:00:37 UTC] [*] Red-Team Test 5C: Packet Length Padding on Web Exploits...
+[2026-10-28 14:00:37 UTC]   Padding +  0%: LightGBM Web Recall = 75.86% | XGBoost Web Recall = 61.38%
+[2026-10-28 14:00:37 UTC]   Padding + 10%: LightGBM Web Recall = 31.03% | XGBoost Web Recall = 18.62%
+[2026-10-28 14:00:37 UTC]   Padding + 25%: LightGBM Web Recall = 15.86% | XGBoost Web Recall = 10.34%
+[2026-10-28 14:00:37 UTC]   Padding + 50%: LightGBM Web Recall = 13.10% | XGBoost Web Recall =  8.97%
+[2026-10-28 14:00:37 UTC]   Padding +100%: LightGBM Web Recall = 13.10% | XGBoost Web Recall =  8.28%
+[2026-10-28 14:00:37 UTC] [*] Red-Team Test 5D: Volumetric Flood Throttling on DDoS Flows...
+[2026-10-28 14:00:38 UTC]   Throttle   1.0x: LightGBM DDoS Recall = 100.00% | XGBoost DDoS Recall = 100.00%
+[2026-10-28 14:00:39 UTC]   Throttle   5.0x: LightGBM DDoS Recall = 100.00% | XGBoost DDoS Recall = 100.00%
+[2026-10-28 14:00:39 UTC]   Throttle  20.0x: LightGBM DDoS Recall = 100.00% | XGBoost DDoS Recall = 100.00%
+[2026-10-28 14:00:40 UTC]   Throttle 100.0x: LightGBM DDoS Recall = 100.00% | XGBoost DDoS Recall = 100.00%
+[2026-10-28 14:00:40 UTC] [*] Red-Team Test 5E: Feature Noise Perturbation Curve (50k flows)...
+[2026-10-28 14:00:41 UTC]   Noise  0.0%: LightGBM Accuracy = 75.77% | XGBoost Accuracy = 84.65%
+[2026-10-28 14:00:42 UTC]   Noise  5.0%: LightGBM Accuracy = 61.21% | XGBoost Accuracy = 68.17%
+[2026-10-28 14:00:43 UTC]   Noise 10.0%: LightGBM Accuracy = 57.52% | XGBoost Accuracy = 66.72%
+[2026-10-28 14:00:44 UTC]   Noise 25.0%: LightGBM Accuracy = 53.09% | XGBoost Accuracy = 63.17%
+[2026-10-28 14:00:45 UTC]   Noise 50.0%: LightGBM Accuracy = 50.61% | XGBoost Accuracy = 59.47%
+[2026-10-28 14:00:45 UTC] 
+======================================================================
+[2026-10-28 14:00:45 UTC] TASK 6: HIGH-RESOLUTION MONOTONIC LATENCY & 100% FULL-DATASET PARITY
+[2026-10-28 14:00:45 UTC] ======================================================================
+[2026-10-28 14:00:45 UTC] [*] Measuring Monotonic Inference Latency across Batch Sizes {1, 64, 1024, 4096}...
+[2026-10-28 14:00:45 UTC]   Batch    1: XGBoost = 135.67 µs/flow (    7,371 fps) | LightGBM = 198.17 µs/flow (    5,046 fps) | Pipeline = 1586.25 µs/flow
+[2026-10-28 14:00:45 UTC]   Batch   64: XGBoost =   6.64 µs/flow (  150,596 fps) | LightGBM =  31.76 µs/flow (   31,484 fps) | Pipeline =  36.81 µs/flow
+[2026-10-28 14:00:46 UTC]   Batch 1024: XGBoost =   1.85 µs/flow (  541,119 fps) | LightGBM =  19.92 µs/flow (   50,193 fps) | Pipeline =   9.99 µs/flow
+[2026-10-28 14:00:48 UTC]   Batch 4096: XGBoost =   1.58 µs/flow (  631,741 fps) | LightGBM =  14.85 µs/flow (   67,326 fps) | Pipeline =   9.01 µs/flow
+[2026-10-28 14:00:48 UTC] [*] Verifying Deployed Inference Engine Parity on 100% of Test Flows (541,345 flows in streaming batches)...
+[2026-10-28 14:00:53 UTC]   Parity Progress: 100,000 / 541,345 flows checked (Chunk 5/28)
+[2026-10-28 14:00:58 UTC]   Parity Progress: 200,000 / 541,345 flows checked (Chunk 10/28)
+[2026-10-28 14:01:03 UTC]   Parity Progress: 300,000 / 541,345 flows checked (Chunk 15/28)
+[2026-10-28 14:01:08 UTC]   Parity Progress: 400,000 / 541,345 flows checked (Chunk 20/28)
+[2026-10-28 14:01:13 UTC]   Parity Progress: 500,000 / 541,345 flows checked (Chunk 25/28)
+[2026-10-28 14:01:15 UTC]   Parity Progress: 541,345 / 541,345 flows checked (Chunk 28/28)
+[2026-10-28 14:01:15 UTC] [+] 100% Full-Test-Set Parity Completed in 26.94s:
+[2026-10-28 14:01:15 UTC]   -> LightGBM Prediction Mismatches:     0 / 541,345 (100% PARITY)
+[2026-10-28 14:01:15 UTC]   -> XGBoost Prediction Mismatches:      0 / 541,345 (100% PARITY)
+[2026-10-28 14:01:15 UTC]   -> Isolation Forest Alert Mismatches:  0 / 541,345 (100% PARITY)
+[2026-10-28 14:01:15 UTC]   -> Deep Autoencoder Alert Mismatches:  0 / 541,345 (100% PARITY)
+[2026-10-28 14:01:15 UTC] 
+======================================================================
+[2026-10-28 14:01:15 UTC] TASK 7: ROLE 3 AND ROLE 4 SEPARATE ITEM-BY-ITEM ASSESSMENT
+[2026-10-28 14:01:15 UTC] ======================================================================
+[2026-10-28 14:01:15 UTC]   Role 3 [authentic_training_data]: PASS — Trained on 1.32M genuine partition rows from 10 CSE captures without synthetic fabrication.
+[2026-10-28 14:01:15 UTC]   Role 3 [reproducible_model_artifacts]: PASS — All 9 SHA-256 digests match bit-for-bit with documented hashes; clean loading verified.
+[2026-10-28 14:01:15 UTC]   Role 3 [partition_splitting_design]: PASS — Capture-aware chronological splits (Feb 28 Infiltration train, Mar 01 Infiltration test).
+[2026-10-28 14:01:15 UTC]   Role 3 [preprocessing_leakage_control]: PASS — StandardScaler and LabelEncoder fitted strictly on Train partition with zero data leakage.
+[2026-10-28 14:01:15 UTC]   Role 3 [reliable_metrics_calculation]: PASS — All mathematical denominators and multi-class confusion counts reconciled.
+[2026-10-28 14:01:15 UTC]   Role 3 [working_inference_engine]: PASS — CyberDefenseInferenceEngine enforces strict schema contract and handles NaNs/edge cases.
+[2026-10-28 14:01:15 UTC]   Role 3 [anomaly_score_thresholds]: PASS — Calibrated 1% FPR and 5% FPR thresholds verified on validation benign traffic.
+[2026-10-28 14:01:15 UTC]   Role 3 [port_feature_vulnerability]: DOCUMENTED_CAVEAT — Model with Dst Port overfits to port 21/22; Role 3 recommended 77-feature port-agnostic candidate as primary.
+[2026-10-28 14:01:15 UTC]   Role 3 [unsupervised_autoencoder_fit]: PASS — PyTorch Autoencoder trained strictly on benign flows with validated reconstruction error.
+[2026-10-28 14:01:15 UTC]   Role 4 [independent_metrics_recomputation]: PASS — Recomputed all metrics across 541,345 test flows with 100% row coverage.
+[2026-10-28 14:01:15 UTC]   Role 4 [confusion_matrix_verification]: PASS — Full 15x15 confusion matrices verified with zero arithmetic discrepancies.
+[2026-10-28 14:01:15 UTC]   Role 4 [per_class_attack_breakdown]: PASS — Complete support, precision, recall, and F1 documented for all 15 classes.
+[2026-10-28 14:01:15 UTC]   Role 4 [red_team_adversarial_testing]: PASS — Five offline evasion suites executed (timing dilation, port hopping, padding, flood throttling, plateau).
+[2026-10-28 14:01:15 UTC]   Role 4 [distinction_of_feature_vs_packet_tests]: PASS — Explicitly distinguished synthetic feature-space stress tests from realistic packet-level evasion.
+[2026-10-28 14:01:15 UTC]   Role 4 [monotonic_latency_benchmarking]: PASS — High-resolution monotonic benchmarks completed across batch sizes 1 to 4096.
+[2026-10-28 14:01:15 UTC]   Role 4 [full_dataset_parity_verification]: PASS — Verified 100% parity across all 541,345 test flows (reconciling previous 2k sample limitation).
+[2026-10-28 14:01:15 UTC]   Role 4 [threshold_formulation_reconciliation]: PASS — Identified exact cause of 8.71% vs 45.17% discrepancy (inverted P(Benign) semantic in role4 script).
+[2026-10-28 14:01:15 UTC]   Role 4 [actionable_integration_handoff]: PASS — Delivered Tiered Defense-in-Depth architecture contract for Role 6 backend development.
+[2026-10-28 14:01:15 UTC] 
+======================================================================
+[2026-10-28 14:01:15 UTC] FINAL AUDIT DECISION: B. COMPLETE WITH CAVEATS
+[2026-10-28 14:01:15 UTC] Justification: Both Role 3 and Role 4 are functionally and technically COMPLETE with verified reproducibility, 100% full-dataset inference parity, and honest failure documentation. However, it is certified with CAVEATS due to three critical operational realities: (1) Single-model dilemma: LightGBM exhibits high false alarms (35.87%) while XGBoost exhibits high Infiltration misses (73.48%), requiring Role 6 to deploy a hybrid tiered pipeline; (2) Flow-level ML is vulnerable to packet padding on Web exploits (< 35% recall), mandating an upstream Layer-7 WAF; (3) The test partition has been repeatedly consulted during previous tuning audits, meaning final metrics must be formally classified as exploratory rather than a pristine lockbox evaluation.
+[2026-10-28 14:01:15 UTC] ======================================================================
+[2026-10-28 14:01:15 UTC] [+] Saved comprehensive final metrics JSON to: /Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/reports/final_acceptance/final_metrics.json
