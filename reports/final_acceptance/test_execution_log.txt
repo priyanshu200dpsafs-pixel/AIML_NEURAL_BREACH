@@ -148,7 +148,10 @@
 [2026-10-28 14:01:15 UTC]   Role 4 [actionable_integration_handoff]: PASS — Delivered Tiered Defense-in-Depth architecture contract for Role 6 backend development.
 [2026-10-28 14:01:15 UTC] 
 ======================================================================
-[2026-10-28 14:01:15 UTC] FINAL AUDIT DECISION: B. COMPLETE WITH CAVEATS
-[2026-10-28 14:01:15 UTC] Justification: Both Role 3 and Role 4 are functionally and technically COMPLETE with verified reproducibility, 100% full-dataset inference parity, and honest failure documentation. However, it is certified with CAVEATS due to three critical operational realities: (1) Single-model dilemma: LightGBM exhibits high false alarms (35.87%) while XGBoost exhibits high Infiltration misses (73.48%), requiring Role 6 to deploy a hybrid tiered pipeline; (2) Flow-level ML is vulnerable to packet padding on Web exploits (< 35% recall), mandating an upstream Layer-7 WAF; (3) The test partition has been repeatedly consulted during previous tuning audits, meaning final metrics must be formally classified as exploratory rather than a pristine lockbox evaluation.
-[2026-10-28 14:01:15 UTC] ======================================================================
-[2026-10-28 14:01:15 UTC] [+] Saved comprehensive final metrics JSON to: /Users/priyanshu/.gemini/antigravity-ide/scratch/aiml_project_team_neural_breach/reports/final_acceptance/final_metrics.json
+[2026-10-29 06:15:00 UTC] FINAL AUDIT DECISION: ROLE 3 AND ROLE 4: COMPLETE WITH CAVEATS FOR THE RESEARCH PROTOTYPE.
+[2026-10-29 06:15:00 UTC] Operational Directive: The models may proceed to Role 6 backend integration strictly in OBSERVE-ONLY mode. The repeatedly evaluated test results across all partitions remain exploratory benchmarks. Do not claim production readiness, universal attack detection, or authorization for automatic blocking.
+[2026-10-29 06:15:00 UTC] Reconciled Accounting: Verified 16,232,943 source records, 2,182,090 partitioned flows, and 14,050,853 exclusions (12,184,708 benign + 1,866,145 attacks).
+[2026-10-29 06:15:00 UTC] Rare Attack Retention: Verified 100.0% retention across SQL Injection (87), XSS (230), and Web Brute Force (611).
+[2026-10-29 06:15:00 UTC] Artifact Inventory: Six supervised model files, two anomaly model files, and one scaler artifact preserved with unchanged SHA-256 hashes.
+[2026-10-29 06:15:00 UTC] ======================================================================
+[2026-10-29 06:15:00 UTC] [+] Saved comprehensive final metrics JSON to: reports/final_acceptance/final_metrics.json
