@@ -1,0 +1,7 @@
+clean_class_label,raw_source_string,attack_family,total_records,percentage_of_total,friday_16_02_count,wednesday_21_02_count,wednesday_28_02_count,thursday_01_03_count
+Benign,Benign,Normal Baseline,1589842,52.2747%,446772,360833,544200,238037
+DDOS attack-HOIC,DDOS attack-HOIC,DDoS Attack,686012,22.5564%,0,686012,0,0
+DoS attacks-Hulk,DoS attacks-Hulk,DoS Attack,461912,15.1879%,461912,0,0,0
+Infiltration,Infilteration,Infiltration / Intrusion,161934,5.3245%,0,0,68871,93063
+DoS attacks-SlowHTTPTest,DoS attacks-SlowHTTPTest,DoS Attack,139890,4.5996%,139890,0,0,0
+DDOS attack-LOIC-UDP,DDOS attack-LOIC-UDP,DDoS Attack,1730,0.0569%,0,1730,0,0

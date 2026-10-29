@@ -1,0 +1,19 @@
+dataset_name,clean_label,record_count,percentage_within_dataset,attack_family
+CSE-CIC-IDS2018,Benign,13484708,83.07%,Normal Baseline
+CSE-CIC-IDS2018,DDOS attack-HOIC,686012,4.23%,Active Cyber Attack
+CSE-CIC-IDS2018,DDoS attacks-LOIC-HTTP,576191,3.55%,Active Cyber Attack
+CSE-CIC-IDS2018,DoS attacks-Hulk,461912,2.85%,Active Cyber Attack
+CSE-CIC-IDS2018,Bot,286191,1.76%,Active Cyber Attack
+CSE-CIC-IDS2018,FTP-BruteForce,193360,1.19%,Active Cyber Attack
+CSE-CIC-IDS2018,SSH-Bruteforce,187589,1.16%,Active Cyber Attack
+CSE-CIC-IDS2018,Infiltration,161934,1.00%,Active Cyber Attack
+CSE-CIC-IDS2018,DoS attacks-SlowHTTPTest,139890,0.86%,Active Cyber Attack
+CSE-CIC-IDS2018,DoS attacks-GoldenEye,41508,0.26%,Active Cyber Attack
+CSE-CIC-IDS2018,DoS attacks-Slowloris,10990,0.07%,Active Cyber Attack
+CSE-CIC-IDS2018,DDOS attack-LOIC-UDP,1730,0.01%,Active Cyber Attack
+CSE-CIC-IDS2018,Brute Force -Web,611,0.00%,Active Cyber Attack
+CSE-CIC-IDS2018,Brute Force -XSS,230,0.00%,Active Cyber Attack
+CSE-CIC-IDS2018,SQL Injection,87,0.00%,Active Cyber Attack
+UNSW-NB15,Attack (1),164673,63.91%,Synthetic/Real Attacks
+UNSW-NB15,Normal (0),93000,36.09%,Normal Baseline
+CTU-13 Scenario 1,Botnet-Neris,14521,100.00%,Infected Botnet Host Traffic (Neris)

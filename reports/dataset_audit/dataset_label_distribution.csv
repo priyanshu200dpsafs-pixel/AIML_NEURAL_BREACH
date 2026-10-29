@@ -1,0 +1,26 @@
+dataset,file,label_name,record_count,percentage_in_file,is_data_artifact
+CSE-CIC-IDS2018,All 10 Days Combined,Benign,13484708,83.0706%,NO
+CSE-CIC-IDS2018,Wednesday-21-02-2018,DDOS attack-HOIC,686012,4.2260%,NO
+CSE-CIC-IDS2018,Thuesday-20-02-2018,DDoS attacks-LOIC-HTTP,576191,3.5495%,NO
+CSE-CIC-IDS2018,Friday-16-02-2018,DoS attacks-Hulk,461912,2.8455%,NO
+CSE-CIC-IDS2018,Friday-02-03-2018,Bot,286191,1.7630%,NO
+CSE-CIC-IDS2018,Wednesday-14-02-2018,FTP-BruteForce,193360,1.1912%,NO
+CSE-CIC-IDS2018,Wednesday-14-02-2018,SSH-Bruteforce,187589,1.1556%,NO
+CSE-CIC-IDS2018,Thursday-01-03 & Wednesday-28-02,Infilteration,161934,0.9976%,NO
+CSE-CIC-IDS2018,Friday-16-02-2018,DoS attacks-SlowHTTPTest,139890,0.8618%,NO
+CSE-CIC-IDS2018,Thursday-15-02-2018,DoS attacks-GoldenEye,41508,0.2557%,NO
+CSE-CIC-IDS2018,Thursday-15-02-2018,DoS attacks-Slowloris,10990,0.0677%,NO
+CSE-CIC-IDS2018,Wednesday-21-02-2018,DDOS attack-LOIC-UDP,1730,0.0107%,NO
+CSE-CIC-IDS2018,Thursday-22-02 & Friday-23-02,Brute Force -Web,611,0.0038%,NO
+CSE-CIC-IDS2018,Thursday-22-02 & Friday-23-02,Brute Force -XSS,230,0.0014%,NO
+CSE-CIC-IDS2018,Thursday-22-02 & Friday-23-02,SQL Injection,87,0.0005%,NO
+UNSW-NB15,UNSW_NB15_training-set.csv,Normal (Benign),56000,32.18%,NO
+UNSW-NB15,UNSW_NB15_training-set.csv,"Attack (Generic, Exploits, Fuzzers, DoS, Recon, Analysis, Backdoor, Shellcode, Worms)",119341,67.82%,NO
+UNSW-NB15,UNSW_NB15_testing-set.csv,Normal (Benign),37000,44.94%,NO
+UNSW-NB15,UNSW_NB15_testing-set.csv,Attack (Multi-vector),45332,55.06%,NO
+LANL Cyber1,redteam.txt.gz,Red-Team Ground-Truth Adversary Compromise Events,749,100.0000%,NO
+LANL Cyber1,dns.txt.gz,Enterprise DNS Query Records,40821591,100.0000%,NO
+CTU-13 Botnet,botnet-capture-20110810-neris.pcap,Neris Botnet C&C / Malicious Packets,323154,100.0000%,NO
+MITRE ATT&CK,enterprise-attack.json,"Enterprise Tactics, Techniques & Procedures",23298,100.0000%,NO
+MITRE ATT&CK,ics-attack.json,Industrial Control Systems Threat Matrix,3788,100.0000%,NO
+MITRE ATT&CK,mobile-attack.json,Mobile Threat Matrix,4854,100.0000%,NO

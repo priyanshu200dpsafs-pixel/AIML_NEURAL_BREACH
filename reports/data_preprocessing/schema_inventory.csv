@@ -1,0 +1,11 @@
+dataset_name,schema_type,total_columns,feature_columns_count,metadata_columns_count,target_columns,storage_format,compression,source_file_pattern,notes
+CSE-CIC-IDS2018,Canonical 80-col,80,78,1,Label,Apache Parquet,Snappy,"{Day}-{DD}-{MM}-2018_TrafficForML_CICFlowMeter.csv (9 files)",Standard CICFlowMeter flow features. Direct identifiers excluded. Dst Port retained as security feature.
+CSE-CIC-IDS2018,Extended 84-col,84,78,5,Label,Apache Parquet,Snappy,Thuesday-20-02-2018_TrafficForML_CICFlowMeter.csv,Contains 4 extra metadata columns (Flow ID, Src IP, Dst IP, Src Port).
+UNSW-NB15,Benchmark 44-col,44,42,1,label,Apache Parquet,Snappy,UNSW_NB15_{training|testing}-set.csv,Partitioned benchmark flows with Argus/Bro state features. Strict separation from CICFlowMeter.
+UNSW-NB15,Full Capture 49-col,49,43,4,attack_cat; label,Reference CSV,N/A,NUSW-NB15_features.csv,Official feature dictionary documenting the 49 raw capture features.
+CTU-13 Scenario 1,Scapy Flow 42-col,42,39,2,Label,Apache Parquet,Snappy,botnet-capture-20110810-neris.pcap,Bidirectional flow metrics extracted via Scapy. Ground truth tagged on Neris infected host 147.32.84.165.
+CTU-13 Scenario 1,CapTipper HTTP 7-col,7,0,7,N/A,Apache Parquet,Snappy,botnet-capture-20110810-neris.json,Web transaction telemetry extracted from HTTP inspection JSON.
+LANL Cyber1,Red Team 4-col,4,0,4,Adversary Event,Apache Parquet,Snappy,redteam.txt.gz,Adversary compromise events with ground-truth epoch offsets and host pairs.
+LANL Cyber1,DNS 3-col,3,0,3,N/A,GZIP Compressed CSV,Gzip,dns.txt.gz,Enterprise internal DNS resolution queries.
+CSE-CIC-IDS2018,Windows EVTX Host Logs,Variable,0,Variable,Event Log,ZIP Archive (432 EVTX),Zip,Friday-23-02-2018_logs.zip,Binary XML security event logs from AWS testbed endpoints. Kept separate from network flows.
+MITRE ATT&CK,STIX 2.1 Bundles,Variable,0,Variable,Knowledge Reference,JSON,N/A,data/reference/MITRE-ATT-CK/*.json,Enterprise, Mobile, and ICS STIX 2.1 threat matrix objects. Isolated knowledge reference.

@@ -1,0 +1,9 @@
+dataset_name,expected_files,actual_files,completeness_pct,total_size_bytes,total_clean_records,status
+CSE-CIC-IDS2018 Daily Flow CSVs,10,10,100.0%,7125345710,16232943,COMPLETE
+CSE-CIC-IDS2018 Windows Event Logs,1,1,100.0%,209495495,432 evtx files,COMPLETE
+UNSW-NB15 Benchmark Flows,3,3,100.0%,44509653,254004,COMPLETE
+LANL Cyber1 Enterprise Telemetry,2,2,100.0%,185109786,40822340,COMPLETE
+CTU-13 Neris Botnet Traffic,2,2,100.0%,72983392,323154 packets,COMPLETE
+MITRE ATT&CK STIX 2.1 Matrices,3,3,100.0%,66632842,31940 objects,COMPLETE
+CIC-IDS2017 Access Gate Audit,1,1,100.0%,1790,Access Gate Specification,AUDITED_FORM_GATE
+CIC-DDoS2019 Access Gate Audit,1,1,100.0%,1017,Access Gate Specification,AUDITED_FORM_GATE

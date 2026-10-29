@@ -1,0 +1,23 @@
+capture_day,source_file,class_label,split_partition,rows_count,epoch_start,epoch_end,split_strategy
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,312740,1518742832,1518745660,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,67015,1518745660,1518745691,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,67017,1518745691,1518785904,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,TRAIN,97923,1518775934,1518777424,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,VALIDATION,20983,1518777424,1518778056,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-SlowHTTPTest,TEST,20984,1518778056,1518778688,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,TRAIN,323338,1518745527,1518745662,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,VALIDATION,69286,1518745662,1518745693,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-16,Friday-16-02-2018_TrafficForML_CICFlowMeter.parquet,DoS attacks-Hulk,TEST,69288,1518745693,1518745724,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,252583,1519178146,1519180116,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,VALIDATION,54124,1519180116,1519180262,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST,54126,1519180262,1519209801,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,TRAIN,1211,1519207731,1519209180,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,VALIDATION,259,1519209180,1519209453,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-LOIC-UDP,TEST,260,1519209454,1519209796,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,TRAIN,480208,1519179068,1519179865,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,VALIDATION,102901,1519179865,1519180124,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-21,Wednesday-21-02-2018_TrafficForML_CICFlowMeter.parquet,DDOS attack-HOIC,TEST,102903,1519180124,1519180409,"Stratified Chronological (70% Train, 15% Val, 15% Test)"
+2018-02-28,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Benign,TRAIN,544200,1519779600,1519822799,Capture-Day Train Partition (100% Train)
+2018-02-28,Wednesday-28-02-2018_TrafficForML_CICFlowMeter.parquet,Infiltration,TRAIN,68871,1519782120,1519819499,Capture-Day Train Partition (100% Train)
+2018-03-01,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Benign,TEST (Held-Out Day),238037,1519866000,1519909199,Capture-Day Held-Out Test Partition (100% Test)
+2018-03-01,Thursday-01-03-2018_TrafficForML_CICFlowMeter.parquet,Infiltration,TEST (Held-Out Day),93063,1519869600,1519901699,Capture-Day Held-Out Test Partition (100% Test)
