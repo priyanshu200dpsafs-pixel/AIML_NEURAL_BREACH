@@ -4,13 +4,17 @@ Automated Test Suite for Role 6: Backend & Real-Time Detection
 Team Neural Breach — AI/ML Cyber Defense Platform
 """
 
+import os
+import json
 import asyncio
 import pytest
 import numpy as np
 import pandas as pd
+from pydantic import ValidationError
 from fastapi.testclient import TestClient
 
 from src.backend.app import app
+from src.backend.config import BackendSettings, settings
 from src.backend.alert_manager import alert_store
 from src.models.inference_engine import CyberDefenseInferenceEngine
 
@@ -218,3 +222,96 @@ class TestSimulationStream:
         assert data["sample_size"] == 5
         assert len(data["alerts"]) == 5
         assert data["observe_only_mode"] is True
+
+
+class TestRole6HardeningAndInvariants:
+    """Regression tests for observe-only invariant, runbook example, missing data, and limits."""
+
+    def test_observe_only_mode_invariant_override_rejection(self):
+        """Verifies that OBSERVE_ONLY_MODE cannot be disabled via kwargs or environment."""
+        # 1. Direct kwargs override attempt
+        with pytest.raises(ValidationError) as exc_info:
+            BackendSettings(OBSERVE_ONLY_MODE=False)
+        assert "OBSERVE_ONLY_MODE is a fixed invariant" in str(exc_info.value)
+
+        # 2. Environment variable override attempt
+        orig_env = os.environ.get("NEURAL_BREACH_OBSERVE_ONLY_MODE")
+        try:
+            os.environ["NEURAL_BREACH_OBSERVE_ONLY_MODE"] = "false"
+            with pytest.raises(ValidationError) as exc_env:
+                BackendSettings()
+            assert "OBSERVE_ONLY_MODE is a fixed invariant" in str(exc_env.value)
+        finally:
+            if orig_env is not None:
+                os.environ["NEURAL_BREACH_OBSERVE_ONLY_MODE"] = orig_env
+            else:
+                os.environ.pop("NEURAL_BREACH_OBSERVE_ONLY_MODE", None)
+
+        # 3. ACTION_ENFORCED tampering attempt
+        with pytest.raises(ValidationError) as exc_act:
+            BackendSettings(ACTION_ENFORCED="BLOCK_PACKETS")
+        assert "ACTION_ENFORCED must remain 'NONE_OBSERVE_ONLY'" in str(exc_act.value)
+
+        # 4. Global settings instance guarantee
+        assert settings.OBSERVE_ONLY_MODE is True
+        assert settings.ACTION_ENFORCED == "NONE_OBSERVE_ONLY"
+
+    def test_valid_prediction_runbook_example(self, client):
+        """Verifies that the runbook example (scripts/sample_valid_flow.json) executes successfully."""
+        json_path = os.path.join(settings.PROJECT_ROOT, "scripts", "sample_valid_flow.json")
+        assert os.path.exists(json_path), f"Missing runbook example at {json_path}"
+
+        with open(json_path, "r") as f:
+            payload = json.load(f)
+
+        assert len(payload["flows"]) == 1
+        assert len(payload["flows"][0]) == 77, "Runbook flow must have exactly 77 features"
+
+        resp = client.post("/api/v1/predict", json=payload)
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["total_flows"] == 1
+        assert data["observe_only_mode"] is True
+        assert len(data["alerts"]) == 1
+
+        alert = data["alerts"][0]
+        assert "alert_id" in alert
+        assert alert["observe_only_mode"] is True
+        assert alert["action_enforced"] == "NONE_OBSERVE_ONLY"
+        assert alert["explanation"]["method"] == "SHAP"
+        assert len(alert["explanation"]["top_features"]) == 5
+
+    def test_missing_simulation_dataset_error_handling(self, client):
+        """Verifies structured 503 error when simulation dataset is absent."""
+        payload = {
+            "sample_size": 10,
+            "attack_ratio": 0.5,
+            "stream_delay_seconds": 0.0,
+            "broadcast_websocket": False,
+            "test_split_path": "/tmp/non_existent_test_split_dataset.parquet"
+        }
+        resp = client.post("/api/v1/alerts/simulate", json=payload)
+        assert resp.status_code == 503
+        data = resp.json()
+        assert "detail" in data
+        assert data["detail"]["error"] == "TestDatasetUnavailable"
+        assert "setup_instructions" in data["detail"]
+
+    def test_batch_size_limit_rejection(self, client, sample_valid_flow):
+        """Verifies rejection with HTTP 413 when flow count exceeds MAX_BATCH_SIZE."""
+        oversized_batch = [sample_valid_flow.copy() for _ in range(settings.MAX_BATCH_SIZE + 1)]
+        payload = {"flows": oversized_batch, "explain": False}
+
+        resp = client.post("/api/v1/predict", json=payload)
+        assert resp.status_code == 413
+        data = resp.json()
+        assert "detail" in data
+        assert data["detail"]["error"] == "BatchSizeExceeded"
+        assert data["detail"]["max_batch_size"] == settings.MAX_BATCH_SIZE
+
+    def test_cors_configuration_no_wildcard(self):
+        """Verifies that CORS origins are restricted to explicit origins without wildcard."""
+        assert "*" not in settings.CORS_ORIGINS
+        assert "http://localhost:3000" in settings.CORS_ORIGINS
+        assert "http://127.0.0.1:3000" in settings.CORS_ORIGINS
+        assert settings.HOST == "127.0.0.1"

@@ -2,7 +2,7 @@
 """
 CLI Launcher for Neural Breach Backend Service
 Usage:
-  python -m src.backend.run_server [--port 8000] [--host 0.0.0.0]
+  python -m src.backend.run_server [--port 8000] [--host 127.0.0.1]
 """
 
 import sys

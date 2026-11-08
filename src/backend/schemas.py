@@ -145,3 +145,4 @@ class SimulationRequest(BaseModel):
     attack_ratio: float = Field(default=0.5, ge=0.0, le=1.0, description="Desired ratio of attack flows.")
     stream_delay_seconds: float = Field(default=0.01, ge=0.0, le=2.0, description="Delay between streaming flows.")
     broadcast_websocket: bool = Field(default=True, description="Whether to broadcast alerts to live WebSockets.")
+    test_split_path: Optional[str] = Field(default=None, description="Optional custom path to test.parquet dataset.")

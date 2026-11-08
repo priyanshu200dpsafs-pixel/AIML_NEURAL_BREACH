@@ -194,15 +194,20 @@ class RealTimeDetectionPipeline:
         sample_size: int = 20,
         attack_ratio: float = 0.5,
         stream_delay_seconds: float = 0.02,
-        broadcast_ws: bool = True
+        broadcast_ws: bool = True,
+        test_split_path: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """
         Samples authentic flows from the benchmark test partition (data/processed/splits/test.parquet),
         streams them through the detection pipeline, and broadcasts alerts in real time.
         """
-        test_path = settings.TEST_SPLIT_PATH
+        test_path = test_split_path or settings.TEST_SPLIT_PATH
         if not os.path.exists(test_path):
-            raise FileNotFoundError(f"Test split dataset not found at {test_path}")
+            raise FileNotFoundError(
+                f"Benchmark test dataset not found at '{test_path}'. "
+                "To synchronize the dataset from Google Drive, run 'python scripts/sync_data_drive.py' "
+                "or specify a valid path via the NEURAL_BREACH_TEST_SPLIT_PATH environment variable."
+            )
 
         # Load slice of test partition
         table = pq.read_table(test_path)

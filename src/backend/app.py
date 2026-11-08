@@ -143,6 +143,17 @@ async def predict_network_flows(request: PredictRequest):
     if not request.flows:
         raise HTTPException(status_code=400, detail="Flows list cannot be empty")
 
+    if len(request.flows) > settings.MAX_BATCH_SIZE:
+        raise HTTPException(
+            status_code=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+            detail={
+                "error": "BatchSizeExceeded",
+                "max_batch_size": settings.MAX_BATCH_SIZE,
+                "received_batch_size": len(request.flows),
+                "message": f"Batch size of {len(request.flows)} flows exceeds maximum permitted limit of {settings.MAX_BATCH_SIZE} flows."
+            }
+        )
+
     try:
         # Construct DataFrame
         df_flows = pd.DataFrame(request.flows)
@@ -248,7 +259,8 @@ async def simulate_traffic_stream(request: SimulationRequest):
             sample_size=request.sample_size,
             attack_ratio=request.attack_ratio,
             stream_delay_seconds=request.stream_delay_seconds,
-            broadcast_ws=request.broadcast_websocket
+            broadcast_ws=request.broadcast_websocket,
+            test_split_path=request.test_split_path
         )
 
         n_attacks = sum(1 for a in simulated_alerts if a["prediction"]["is_attack"])
@@ -264,7 +276,18 @@ async def simulate_traffic_stream(request: SimulationRequest):
             "alerts": simulated_alerts
         }
     except FileNotFoundError as fnfe:
-        raise HTTPException(status_code=404, detail=str(fnfe))
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail={
+                "error": "TestDatasetUnavailable",
+                "message": str(fnfe),
+                "setup_instructions": (
+                    "The benchmark test dataset is not available at the configured path. "
+                    "Run 'python scripts/sync_data_drive.py' to download the CSE-CIC-IDS2018 test.parquet "
+                    "dataset or specify a valid path via the NEURAL_BREACH_TEST_SPLIT_PATH environment variable."
+                )
+            }
+        )
     except Exception as e:
         logger.error(f"Simulation error: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Simulation error: {str(e)}")

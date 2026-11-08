@@ -6,8 +6,8 @@
 **Role:** Role 5 — Explainable AI (XAI) & Threat Intelligence Specialist  
 **Integration Partner:** Role 6 — Backend & Real-Time Detection Engineer  
 **Date:** November 2026  
-**Status:** Certified & Production-Integrated (Observe-Only Mode)  
-**Test Pass Rate:** 100% (10/10 Unit & Contract Tests Passing)  
+**Status:** Research Prototype Certified (Observe-Only Mode)  
+**Test Pass Rate:** 100% (11/11 Unit & Contract Tests Passing)  
 
 ---
 
@@ -321,19 +321,51 @@ Role 5 exposes a single entrypoint `ThreatIntelService.enrich_alert()`. The retu
 The Role 5 module suite was thoroughly verified using automated test assertions in `tests/test_role5_xai.py`:
 
 ```
-tests/test_role5_xai.py::TestMitreThreatIntelligence::test_stix_21_verification PASSED       [ 10%]
-tests/test_role5_xai.py::TestMitreThreatIntelligence::test_all_15_classes_mapped PASSED      [ 20%]
-tests/test_role5_xai.py::TestMitreThreatIntelligence::test_suspicious_anomaly_mapping PASSED [ 30%]
-tests/test_role5_xai.py::TestExplainableAI::test_shap_explanation_structure PASSED           [ 40%]
-tests/test_role5_xai.py::TestExplainableAI::test_lime_explanation_structure PASSED           [ 50%]
-tests/test_role5_xai.py::TestExplainableAI::test_autoencoder_anomaly_attribution PASSED      [ 60%]
-tests/test_role5_xai.py::TestThreatPrioritization::test_benign_score_and_tier PASSED         [ 70%]
-tests/test_role5_xai.py::TestThreatPrioritization::test_critical_threat_scoring PASSED       [ 80%]
+tests/test_role5_xai.py::TestMitreThreatIntelligence::test_stix_21_verification PASSED       [  9%]
+tests/test_role5_xai.py::TestMitreThreatIntelligence::test_all_15_classes_mapped PASSED      [ 18%]
+tests/test_role5_xai.py::TestMitreThreatIntelligence::test_suspicious_anomaly_mapping PASSED [ 27%]
+tests/test_role5_xai.py::TestMitreThreatIntelligence::test_semantic_accuracy_ratings PASSED [ 36%]
+tests/test_role5_xai.py::TestExplainableAI::test_shap_explanation_structure PASSED           [ 45%]
+tests/test_role5_xai.py::TestExplainableAI::test_lime_explanation_structure PASSED           [ 54%]
+tests/test_role5_xai.py::TestExplainableAI::test_autoencoder_anomaly_attribution PASSED      [ 63%]
+tests/test_role5_xai.py::TestThreatPrioritization::test_benign_score_and_tier PASSED         [ 72%]
+tests/test_role5_xai.py::TestThreatPrioritization::test_critical_threat_scoring PASSED       [ 81%]
 tests/test_role5_xai.py::TestThreatPrioritization::test_anomaly_corroboration_impact PASSED  [ 90%]
 tests/test_role5_xai.py::TestThreatIntelServiceContract::test_enrich_alert_complete_schema PASSED [100%]
 
-======================== 10 passed in 3.88s ========================
+======================== 11 passed in 3.15s ========================
 ```
 
-### 9. Sign-Off Certification
-Role 5 has successfully implemented, benchmarked, and delivered all XAI explanations, verified MITRE ATT&CK threat intelligence mappings, transparent prioritization calculations, and SOC playbooks. The service is fully integrated and operational with Role 6.
+**Role 5 Suite Result:** `11 passed in 3.15s (100% Pass Rate)`.  
+**Master Project Test Suite Result:** `41 passed in 6.44s (100% Pass Rate)`.
+
+---
+
+### 9. Environment, Dependency Versions & Reference-Data Setup
+
+#### 9.1. Verified Runtime Dependencies
+The Role 5 module suite was developed and verified against the following runtime environment:
+- **Python Runtime:** Python 3.13.7 (compatible with Python >= 3.10)
+- **Explainability:** `shap>=0.46.0`, `lime>=0.2.0.1`
+- **Machine Learning Core:** `scikit-learn>=1.5.0`, `lightgbm>=4.5.0`, `xgboost>=1.7.0`, `torch>=2.2.0`
+- **Data & Serialization:** `pandas>=2.2.0`, `numpy>=1.26.0,<3.0.0`, `pydantic>=2.9.0`, `pyarrow>=17.0.0`
+
+#### 9.2. MITRE ATT&CK Reference Data Architecture
+1. **Self-Contained In-Code Catalog:** The platform includes a zero-dependency verified catalog in `src/xai/mitre_mapper.py` covering all 15 attack categories and unsupervised anomalies with explicit semantic accuracy annotations (`CONFIRMED_FLOW_SIGNATURE`, `UNCONFIRMED_FLOW_SURROGATE`, `UNCONFIRMED_GENERIC_ANOMALY`). The service executes in clean environments without external downloads.
+2. **Optional Full STIX 2.1 Re-Validation:** To cross-reference catalog techniques against the full 53 MB upstream MITRE ATT&CK STIX 2.1 bundle:
+   ```bash
+   python scripts/setup_mitre_data.py
+   ```
+   Or download directly via curl:
+   ```bash
+   curl -o data/reference/MITRE-ATT-CK/enterprise-attack.json \
+     https://raw.githubusercontent.com/mitre/cti/master/enterprise-attack/enterprise-attack.json
+   ```
+
+---
+
+### 10. Research Prototype Scope & Sign-Off Certification
+Role 5 has successfully implemented, benchmarked, and delivered all XAI explanations, verified MITRE ATT&CK threat intelligence mappings, transparent prioritization calculations, and SOC playbooks. 
+
+**Scope & Governance Note:** The system is certified strictly as an **unauthenticated research prototype** operating under an immutable **observe-only** mandate (`OBSERVE_ONLY_MODE=True`). Automated inline packet dropping is not authorized. Mappings for application-layer payloads (e.g., SQLi, XSS) remain unconfirmed surrogates based on flow dynamics and require external WAF/endpoint corroboration.
+
