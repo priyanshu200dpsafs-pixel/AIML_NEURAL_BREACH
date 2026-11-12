@@ -34,7 +34,7 @@ def upsert_alert(db: Session, *, org_id: str, device_id: str, batch_id: Optional
     sig = signature_for(device_id, result)
     cutoff = now - timedelta(seconds=DEDUP_WINDOW_SECONDS)
     existing = db.scalar(select(Alert).where(Alert.org_id == org_id, Alert.device_id == device_id, Alert.signature == sig,
-                                             Alert.last_seen >= cutoff).order_by(Alert.last_seen.desc()).limit(1))
+                                             Alert.last_seen >= cutoff).order_by(Alert.last_seen.desc()).limit(1).with_for_update())
     if existing:
         existing.repeat_count += 1
         existing.last_seen = now

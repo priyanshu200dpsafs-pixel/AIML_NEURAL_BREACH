@@ -21,8 +21,8 @@ def upgrade():
         sa.Column("email", sa.String(320), nullable=False, unique=True),
         sa.Column("password_hash", sa.String(255), nullable=False),
         sa.Column("display_name", sa.String(120), nullable=True),
-        sa.Column("is_active", sa.Boolean(), nullable=False, server_default=sa.text("1")),
-        sa.Column("is_platform_admin", sa.Boolean(), nullable=False, server_default=sa.text("0")),
+        sa.Column("is_active", sa.Boolean(), nullable=False, server_default=sa.text("true")),
+        sa.Column("is_platform_admin", sa.Boolean(), nullable=False, server_default=sa.text("false")),
         sa.Column("failed_logins", sa.Integer(), nullable=False, server_default=sa.text("0")),
         sa.Column("locked_until", sa.DateTime(timezone=True), nullable=True),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False)
@@ -263,7 +263,7 @@ def upgrade():
         sa.Column("version", sa.String(64), nullable=False),
         sa.Column("artifact_sha256", sa.String(64), nullable=True),
         sa.Column("feature_contract_sha256", sa.String(64), nullable=True),
-        sa.Column("active", sa.Boolean(), nullable=False, server_default=sa.text("1")),
+        sa.Column("active", sa.Boolean(), nullable=False, server_default=sa.text("true")),
         sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
         sa.UniqueConstraint("name", "version", name="uq_model_version")
     )
