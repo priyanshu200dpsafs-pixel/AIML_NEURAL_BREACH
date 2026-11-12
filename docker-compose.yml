@@ -1,0 +1,33 @@
+# Development/staging only. Put a TLS-terminating reverse proxy in front before any non-local exposure.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: neural
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: neural_breach
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck: {test: ["CMD-SHELL", "pg_isready -U neural -d neural_breach"], interval: 5s, retries: 10}
+    ports: ["127.0.0.1:5432:5432"]
+  migrate:
+    build: {context: ., dockerfile: Dockerfile.platform}
+    command: alembic upgrade head
+    environment: &env
+      NB_DATABASE_URL: postgresql+psycopg://neural:${POSTGRES_PASSWORD}@db:5432/neural_breach
+      NB_JWT_SECRET: ${NB_JWT_SECRET:?set NB_JWT_SECRET (>=32 chars)}
+      NB_DETECTION_ADAPTER: ${NB_DETECTION_ADAPTER:-}
+    depends_on: {db: {condition: service_healthy}}
+  api:
+    build: {context: ., dockerfile: Dockerfile.platform}
+    environment: *env
+    ports: ["127.0.0.1:8000:8000"]
+    depends_on: {migrate: {condition: service_completed_successfully}}
+    healthcheck: {test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8000/api/v1/ready')"], interval: 10s, retries: 5}
+  worker:
+    build: {context: ., dockerfile: Dockerfile.platform}
+    command: python -m src.backend.platform_ext.worker_main
+    environment: *env
+    stop_grace_period: 60s
+    depends_on: {migrate: {condition: service_completed_successfully}}
+    healthcheck: {test: ["CMD-SHELL", "test $$(( $$(date +%s) - $$(cut -d. -f1 /tmp/nb_worker_alive) )) -lt 30"], interval: 15s, retries: 3}
+volumes: {pgdata: {}}
