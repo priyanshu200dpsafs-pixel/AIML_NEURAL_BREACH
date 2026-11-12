@@ -40,6 +40,7 @@ def env():
         sess._engine = None
         sess._Session = None
     os.environ["NB_DATABASE_URL"] = f"sqlite:///{DB_PATH}"
+    os.environ["NB_FEATURE_COLUMNS_PATH"] = _cols_path
     if os.path.exists(DB_PATH): os.remove(DB_PATH)
     app = FastAPI()
     install_platform(app)

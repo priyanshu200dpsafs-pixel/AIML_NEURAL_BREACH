@@ -20,6 +20,7 @@ from src.backend.platform_ext.db.session import get_engine
 @pytest.fixture(scope="module")
 def integrated_client():
     """Mounts Role 7 platform extension onto the real Role 6 application."""
+    old_env = dict(os.environ)
     tmp = tempfile.NamedTemporaryFile(suffix=".db", delete=False)
     tmp.close()
     os.environ["NB_JWT_SECRET"] = "c" * 48
@@ -41,6 +42,9 @@ def integrated_client():
         sess._Session = None
     if os.path.exists(tmp.name):
         os.remove(tmp.name)
+    os.environ.clear()
+    os.environ.update(old_env)
+    get_settings.cache_clear()
 
 
 @pytest.fixture()
