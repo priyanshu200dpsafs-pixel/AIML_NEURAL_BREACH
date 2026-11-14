@@ -1,11 +1,36 @@
+# Multi-stage build for Team Neural Breach Platform & SOC Console
+# Stage 1: Build production React frontend
+FROM node:20-slim AS frontend-builder
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci || npm install
+COPY frontend/ ./
+RUN npm run build
+
+# Stage 2: Production Python Backend & Platform Extension
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 RUN useradd --create-home --uid 10001 app
 WORKDIR /app
-# NOTE: the full repo requirements.txt (torch, shap, lightgbm...) is also needed because the worker runs the Role 3/5/6 pipeline.
+
+# System dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY requirements.txt requirements-platform.txt ./
 RUN pip install --no-cache-dir -r requirements.txt -r requirements-platform.txt
+
+# Copy source code and frozen models
 COPY . .
+# Copy compiled frontend from Stage 1 into production static directory
+COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
+
+RUN chown -R app:app /app
 USER app
+
 EXPOSE 8000
+HEALTHCHECK --interval=15s --timeout=5s --retries=3 \
+    CMD curl -f http://127.0.0.1:8000/api/v1/health || exit 1
+
 CMD ["uvicorn", "src.backend.platform_main:app", "--host", "0.0.0.0", "--port", "8000", "--proxy-headers"]

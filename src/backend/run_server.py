@@ -18,7 +18,9 @@ def main():
     parser.add_argument("--workers", type=int, default=1, help="Number of worker processes")
     args = parser.parse_args()
 
-    print(f"[*] Starting Neural Breach Backend on {args.host}:{args.port} (Observe-Only Mode)...")
+    print(f"[*] Starting Neural Breach Backend on http://{args.host}:{args.port} (Observe-Only Mode)...")
+    print(f"[*] SOC Command Console UI available at: http://{args.host}:{args.port}/ui")
+    print(f"[*] API Documentation available at: http://{args.host}:{args.port}/docs")
     uvicorn.run(
         "src.backend.app:app",
         host=args.host,

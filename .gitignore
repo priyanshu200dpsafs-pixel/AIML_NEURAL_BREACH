@@ -32,6 +32,11 @@ htmlcov/
 .tox/
 .nox/
 
+# Frontend & Node Dependencies
+node_modules/
+frontend/node_modules/
+.npm/
+
 # IDE & Editor Files
 .vscode/
 .idea/

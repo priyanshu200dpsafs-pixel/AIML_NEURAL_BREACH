@@ -14,15 +14,17 @@ Endpoints:
 """
 
 import time
+import os
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
 
 import pandas as pd
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Query, status
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect, Query, status, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 
 from src.backend.config import settings
 from src.backend.schemas import (
@@ -41,6 +43,11 @@ logger = logging.getLogger("neural_breach.backend.app")
 # Global pipeline instance initialized on startup
 pipeline: Optional[RealTimeDetectionPipeline] = None
 start_time_epoch: float = time.time()
+
+# Frontend build paths
+FRONTEND_DIST = os.path.join(settings.PROJECT_ROOT, "frontend", "dist")
+FRONTEND_INDEX = os.path.join(FRONTEND_DIST, "index.html")
+FRONTEND_ASSETS = os.path.join(FRONTEND_DIST, "assets")
 
 
 @asynccontextmanager
@@ -79,17 +86,46 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount compiled production frontend static assets if present
+if os.path.exists(FRONTEND_ASSETS):
+    app.mount("/assets", StaticFiles(directory=FRONTEND_ASSETS), name="frontend_assets")
+
 
 @app.get("/", tags=["General"])
-async def root():
-    """Root endpoint verifying API operational status."""
+async def root(request: Request):
+    """
+    Root endpoint verifying API operational status.
+    Serves the production React SOC Dashboard if requested by a web browser.
+    """
+    accept = request.headers.get("accept", "")
+    if "text/html" in accept and not accept.startswith("*/*") and os.path.exists(FRONTEND_INDEX):
+        return FileResponse(FRONTEND_INDEX)
+
     return {
         "service": settings.APP_NAME,
         "version": settings.APP_VERSION,
         "observe_only_mode": True,
         "action_enforced": settings.ACTION_ENFORCED,
-        "docs_url": "/docs"
+        "docs_url": "/docs",
+        "ui_url": "/ui"
     }
+
+
+@app.get("/ui", include_in_schema=False)
+@app.get("/dashboard", include_in_schema=False)
+@app.get("/alerts", include_in_schema=False)
+@app.get("/investigate", include_in_schema=False)
+@app.get("/analytics", include_in_schema=False)
+@app.get("/health", include_in_schema=False)
+@app.get("/demo", include_in_schema=False)
+async def serve_frontend_spa():
+    """Serves the compiled production React SOC Dashboard SPA."""
+    if os.path.exists(FRONTEND_INDEX):
+        return FileResponse(FRONTEND_INDEX)
+    raise HTTPException(
+        status_code=404,
+        detail="Frontend build not found. Execute 'npm run build' inside frontend/ to compile the React SOC Dashboard."
+    )
 
 
 @app.get("/api/v1/health", response_model=HealthResponse, tags=["Health"])
