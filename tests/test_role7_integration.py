@@ -1,4 +1,6 @@
-"""Comprehensive integration test suite proving that installing Role 7 platform extension
+"""Comprehensive integration test suite proving that installin
+
+g Role 7 platform extension
 onto the official Role 6 FastAPI application preserves 100% of existing functionality,
 route handlers, error contracts, and endpoints while enabling new enterprise multi-tenant capabilities.
 """

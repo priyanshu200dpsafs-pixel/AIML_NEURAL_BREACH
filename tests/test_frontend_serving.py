@@ -55,3 +55,4 @@ def test_static_assets_serving(client):
         for asset_file in asset_files:
             resp = client.get(f"/assets/{asset_file}")
             assert resp.status_code == 200
+

@@ -73,7 +73,7 @@ export default function AlertInvestigation({ selectedAlert, liveAlerts, onSelect
 
   // Find max contribution for relative bar width
   const maxContrib = topFeatures.length > 0 
-    ? Math.max(...topFeatures.map(f => Math.abs(f.contribution || 0)), 0.001)
+    ? Math.max(...topFeatures.map(f => Math.abs(f.contribution ?? f.importance ?? f.shap_value ?? 0)), 0.001)
     : 1;
 
   return (
@@ -168,12 +168,13 @@ export default function AlertInvestigation({ selectedAlert, liveAlerts, onSelect
               </div>
             ) : (
               topFeatures.map((feat, idx) => {
-                const contrib = feat.contribution || 0;
+                const contrib = feat.contribution ?? feat.importance ?? feat.shap_value ?? 0;
                 const isPositive = contrib >= 0;
                 const barWidth = Math.min(100, Math.max(8, Math.round((Math.abs(contrib) / maxContrib) * 100)));
+                const featVal = feat.value ?? feat.feature_value ?? '—';
 
                 return (
-                  <div key={idx} className="shap-bar-container">
+                  <div key={idx} className="shap-bar-container" title={feat.interpretation || ''}>
                     <span className="shap-bar-label text-xs" title={feat.feature}>
                       {feat.feature}
                     </span>
@@ -191,14 +192,20 @@ export default function AlertInvestigation({ selectedAlert, liveAlerts, onSelect
                       </span>
                     </div>
 
-                    <div className="w-16 text-right font-mono text-[10px] text-slate-500 truncate" title={`Feature Value: ${feat.feature_value}`}>
-                      val: {typeof feat.feature_value === 'number' ? feat.feature_value.toFixed(1) : feat.feature_value}
+                    <div className="w-16 text-right font-mono text-[10px] text-slate-500 truncate" title={`Feature Value: ${featVal}`}>
+                      val: {typeof featVal === 'number' ? featVal.toFixed(1) : featVal}
                     </div>
                   </div>
                 );
               })
             )}
           </div>
+
+          {explanation?.summary && (
+            <div className="p-2.5 bg-slate-900/50 rounded border border-slate-800 text-[11px] text-slate-300 italic">
+              "{explanation.summary}"
+            </div>
+          )}
 
           {explanation?.base_value !== undefined && (
             <div className="border-t border-[#1b283d] pt-3 flex justify-between text-xs text-slate-400 font-mono">

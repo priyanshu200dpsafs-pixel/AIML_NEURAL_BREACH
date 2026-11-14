@@ -61,3 +61,4 @@ echo "----------------------------------------------------------------------"
 echo ""
 
 exec python3 -m src.backend.run_server --host "$HOST" --port "$PORT"
+

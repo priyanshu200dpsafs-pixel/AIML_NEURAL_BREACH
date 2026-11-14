@@ -27,3 +27,4 @@ if __name__ == "__main__":
     host = os.environ.get("NEURAL_BREACH_HOST", settings.HOST)
     port = int(os.environ.get("NEURAL_BREACH_PORT", settings.PORT))
     uvicorn.run("src.backend.platform_main:app", host=host, port=port, log_level="info")
+

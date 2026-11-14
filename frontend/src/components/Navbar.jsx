@@ -86,3 +86,4 @@ export default function Navbar({ activeTab, setActiveTab, wsStatus, sessionUser,
     </header>
   );
 }
+

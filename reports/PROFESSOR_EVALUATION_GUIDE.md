@@ -197,3 +197,4 @@ Use this checklist to record screenshots and verification milestones for the cap
    - **Resolution:** Use Scenario 2, which runs identical live model inference using the bundled 77-feature flow record without requiring external downloads.
 3. **PostgreSQL 16 Staging Verification:**
    - In accordance with strict release governance, the PostgreSQL 16 staging concurrency smoke test is formally documented and isolated in `reports/role7/POSTGRESQL16_STAGING_RUNBOOK.md`. Local SOC dashboard evaluation runs independently without requiring live PostgreSQL 16 staging credentials.
+
